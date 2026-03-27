@@ -152,54 +152,54 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">Overview</div>
-    <a class="nav-item active" onclick="nav('overview','Introduction')">Introduction</a>
-    <a class="nav-item sub" onclick="nav('overview','Introduction')">How to Use the API</a>
-    <a class="nav-item sub" onclick="nav('overview','Introduction')">Authentication</a>
-    <a class="nav-item sub" onclick="nav('overview','Introduction')">Base URLs</a>
+    <a class="nav-item active" data-page="overview" onclick="nav('overview','Introduction')">Introduction</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-how-to-use" onclick="nav('overview','Introduction','h-how-to-use')">How to Use the API</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-authentication" onclick="nav('overview','Introduction','h-authentication')">Authentication</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-base-urls" onclick="nav('overview','Introduction','h-base-urls')">Base URLs</a>
   </div>
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">API Reference</div>
-    <a class="nav-item" onclick="nav('send','Send e-Invoice')">Send e-Invoice <span class="method m-post" style="font-size:9px;padding:1px 5px;margin-left:4px">POST</span></a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Request Headers</a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Request Body</a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Request Schema</a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Sample Request</a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Response Schema</a>
-    <a class="nav-item sub" onclick="nav('codelists','Code Lists')">Code Lists</a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Error Codes</a>
-    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">API Constraints</a>
-    <a class="nav-item" onclick="nav('status','Status Check')">Status Check <span class="method m-get" style="font-size:9px;padding:1px 5px;margin-left:4px">GET</span></a>
-    <a class="nav-item sub" onclick="nav('status','Status Check')">Request Headers</a>
-    <a class="nav-item sub" onclick="nav('status','Status Check')">Response Schema</a>
-    <a class="nav-item sub" onclick="nav('status','Status Check')">Sample Response</a>
+    <a class="nav-item" data-page="send" onclick="nav('send','Send e-Invoice')">Send e-Invoice <span class="method m-post" style="font-size:9px;padding:1px 5px;margin-left:4px">POST</span></a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-headers" onclick="nav('send','Send e-Invoice','h-send-headers')">Request Headers</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-body" onclick="nav('send','Send e-Invoice','h-send-body')">Request Body</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-schema" onclick="nav('send','Send e-Invoice','h-send-schema')">Request Schema</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-sample" onclick="nav('send','Send e-Invoice','h-send-sample')">Sample Request</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-response" onclick="nav('send','Send e-Invoice','h-send-response')">Response Schema</a>
+    <a class="nav-item sub" data-page="codelists" onclick="nav('codelists','Code Lists')">Code Lists</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-errors" onclick="nav('send','Send e-Invoice','h-send-errors')">Error Codes</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-constraints" onclick="nav('send','Send e-Invoice','h-send-constraints')">API Constraints</a>
+    <a class="nav-item" data-page="status" onclick="nav('status','Status Check')">Status Check <span class="method m-get" style="font-size:9px;padding:1px 5px;margin-left:4px">GET</span></a>
+    <a class="nav-item sub" data-page="status" data-anchor="h-status-headers" onclick="nav('status','Status Check','h-status-headers')">Request Headers</a>
+    <a class="nav-item sub" data-page="status" data-anchor="h-status-response" onclick="nav('status','Status Check','h-status-response')">Response Schema</a>
+    <a class="nav-item sub" data-page="status" data-anchor="h-status-sample" onclick="nav('status','Status Check','h-status-sample')">Sample Response</a>
   </div>
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">Country Guides</div>
-    <a class="nav-item" onclick="nav('be','Belgium')">Belgium <span class="ctag ctag-be">BE</span></a>
-    <a class="nav-item sub" onclick="nav('be','Belgium')">Country Overview</a>
-    <a class="nav-item sub" onclick="nav('be','Belgium')">Invoice Types</a>
-    <a class="nav-item sub" onclick="nav('be','Belgium')">Extensions</a>
-    <a class="nav-item sub" onclick="nav('be-map','Belgium — Field Mapping')">Field Mapping</a>
-    <a class="nav-item sub" onclick="nav('be','Belgium')">Sample Payload</a>
-    <a class="nav-item" onclick="nav('my','Malaysia')">Malaysia <span class="ctag ctag-my">MY</span></a>
-    <a class="nav-item sub" onclick="nav('my','Malaysia')">Country Overview</a>
-    <a class="nav-item sub" onclick="nav('my','Malaysia')">Invoice Types</a>
-    <a class="nav-item sub" onclick="nav('my','Malaysia')">Extensions</a>
-    <a class="nav-item sub" onclick="nav('my-map','Malaysia — Field Mapping')">Field Mapping</a>
-    <a class="nav-item sub" onclick="nav('my','Malaysia')">Sample Payload</a>
-    <a class="nav-item" onclick="nav('ae','UAE')">UAE <span class="ctag ctag-ae">AE</span></a>
-    <a class="nav-item sub" onclick="nav('ae','UAE')">Country Overview</a>
-    <a class="nav-item sub" onclick="nav('ae','UAE')">Invoice Types</a>
-    <a class="nav-item sub" onclick="nav('ae','UAE')">PINT AE Extensions</a>
-    <a class="nav-item sub" onclick="nav('ae-map','UAE — Field Mapping')">Field Mapping</a>
-    <a class="nav-item sub" onclick="nav('ae','UAE')">Sample Payload</a>
+    <a class="nav-item" data-page="be" onclick="nav('be','Belgium')">Belgium <span class="ctag ctag-be">BE</span></a>
+    <a class="nav-item sub" data-page="be" onclick="nav('be','Belgium')">Country Overview</a>
+    <a class="nav-item sub" data-page="be" data-anchor="h-be-invoice-types" onclick="nav('be','Belgium','h-be-invoice-types')">Invoice Types</a>
+    <a class="nav-item sub" data-page="be" data-anchor="h-be-extensions" onclick="nav('be','Belgium','h-be-extensions')">Extensions</a>
+    <a class="nav-item sub" data-page="be-map" onclick="nav('be-map','Belgium — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" data-page="be" data-anchor="h-be-sample" onclick="nav('be','Belgium','h-be-sample')">Sample Payload</a>
+    <a class="nav-item" data-page="my" onclick="nav('my','Malaysia')">Malaysia <span class="ctag ctag-my">MY</span></a>
+    <a class="nav-item sub" data-page="my" onclick="nav('my','Malaysia')">Country Overview</a>
+    <a class="nav-item sub" data-page="my" data-anchor="h-my-invoice-types" onclick="nav('my','Malaysia','h-my-invoice-types')">Invoice Types</a>
+    <a class="nav-item sub" data-page="my" data-anchor="h-my-extensions" onclick="nav('my','Malaysia','h-my-extensions')">Extensions</a>
+    <a class="nav-item sub" data-page="my-map" onclick="nav('my-map','Malaysia — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" data-page="my" data-anchor="h-my-sample" onclick="nav('my','Malaysia','h-my-sample')">Sample Payload</a>
+    <a class="nav-item" data-page="ae" onclick="nav('ae','UAE')">UAE <span class="ctag ctag-ae">AE</span></a>
+    <a class="nav-item sub" data-page="ae" onclick="nav('ae','UAE')">Country Overview</a>
+    <a class="nav-item sub" data-page="ae" onclick="nav('ae','UAE')">Invoice Types</a>
+    <a class="nav-item sub" data-page="ae" data-anchor="h-ae-extensions" onclick="nav('ae','UAE','h-ae-extensions')">PINT AE Extensions</a>
+    <a class="nav-item sub" data-page="ae-map" onclick="nav('ae-map','UAE — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" data-page="ae" data-anchor="h-ae-sample" onclick="nav('ae','UAE','h-ae-sample')">Sample Payload</a>
   </div>
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">Resources</div>
-    <a class="nav-item" onclick="nav('codelists','Code Lists')">Code Lists</a>
+    <a class="nav-item" data-page="codelists" onclick="nav('codelists','Code Lists')">Code Lists</a>
     <a class="nav-item">Validations and Errors</a>
     <a class="nav-item">Changelog</a>
   </div>
@@ -249,7 +249,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         </div>
       </div>
 
-      <h2>How to Use the API</h2>
+      <h2 id="h-how-to-use">How to Use the API</h2>
       <div class="steps">
         <div class="step"><div class="step-num"></div><div class="step-body"><strong>Onboard on ClearTax</strong> — Create a workspace on the demo environment for testing and a production workspace for live invoices.</div></div>
         <div class="step"><div class="step-num"></div><div class="step-body"><strong>Add countries</strong> — Enable the countries you operate in from your workspace settings.</div></div>
@@ -259,7 +259,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <div class="step"><div class="step-num"></div><div class="step-body"><strong>Send and track</strong> — Submit via the Send API, track processing via Status Check, and optionally trigger PDF generation or buyer email.</div></div>
       </div>
 
-      <h2>Authentication</h2>
+      <h2 id="h-authentication">Authentication</h2>
       <p>All requests must include a valid auth token. The business identifier header is conditional on the country.</p>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Header</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
@@ -275,7 +275,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         </tbody>
       </table></div>
 
-      <h2>Base URLs</h2>
+      <h2 id="h-base-urls">Base URLs</h2>
       <div class="url-grid">
         <div class="url-card">
           <div class="url-card-label">Sandbox (Demo / Testing)</div>
@@ -302,7 +302,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <div class="endpoint-body">Supports up to <strong>10 documents per request</strong>. <code>DocumentData</code> must be a Base64-encoded JSON string of the eInvoice object.</div>
       </div>
 
-      <h2>Request Headers</h2>
+      <h2 id="h-send-headers">Request Headers</h2>
       <p>See the <a onclick="nav('overview','Introduction')">Authentication</a> section for the full header reference.</p>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Query Parameter</th><th>Type</th><th>Description</th></tr></thead>
@@ -311,7 +311,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         </tbody>
       </table></div>
 
-      <h2>Request Body</h2>
+      <h2 id="h-send-body">Request Body</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
         <tbody>
@@ -322,13 +322,13 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         </tbody>
       </table></div>
 
-      <h2>Request Schema</h2>
+      <h2 id="h-send-schema">Request Schema</h2>
       <div class="placeholder-box">
         <strong>Request Schema — Placeholder</strong>
         <p>The base JSON schema covering fields common across all countries will be documented here.</p>
       </div>
 
-      <h2>Sample Request</h2>
+      <h2 id="h-send-sample">Sample Request</h2>
       <div class="code-wrap">
         <div class="code-head"><span class="code-lang">HTTP Headers</span></div>
         <pre><span class="hk">x-cleartax-auth-token:</span> <span class="s">eyJhbGciOiJIUzI1NiJ9...</span>
@@ -347,7 +347,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 <span class="p">}</span></pre>
       </div>
 
-      <h2>Response Status Codes</h2>
+      <h2 id="h-send-status-codes">Response Status Codes</h2>
       <div class="status-grid">
         <div class="status-item"><span class="scode s2">200</span><span class="sdesc">Success. Invoice accepted and processed.</span></div>
         <div class="status-item"><span class="scode s4">400</span><span class="sdesc">Bad Request. Invalid payload or missing fields.</span></div>
@@ -359,7 +359,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <div class="status-item"><span class="scode s5">503</span><span class="sdesc">Service Unavailable.</span></div>
       </div>
 
-      <h2>Response Schema</h2>
+      <h2 id="h-send-response">Response Schema</h2>
       <h3>Document Response Object</h3>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
@@ -384,13 +384,13 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         </tbody>
       </table></div>
 
-      <h2>Code Lists</h2>
+      <h2 id="h-send-codelists">Code Lists</h2>
       <p>See the <a onclick="nav('codelists','Code Lists')">Code Lists</a> page for all enumerated values including invoice type codes, tax category codes, payment means codes, and unit of measure codes.</p>
 
-      <h2>Error Codes</h2>
+      <h2 id="h-send-errors">Error Codes</h2>
       <div class="callout callout-note">The complete list of error codes, messages, applicable countries, causes, and resolutions will be published in the <strong>Validations and Errors</strong> reference.</div>
 
-      <h2>API Constraints</h2>
+      <h2 id="h-send-constraints">API Constraints</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Constraint</th><th>Details</th></tr></thead>
         <tbody>
@@ -410,7 +410,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <div class="endpoint-card">
         <div class="endpoint-header"><span class="method m-get">GET</span><span class="endpoint-url">/einvoice/v1/documents/{document_id}/status</span></div>
       </div>
-      <h2>Request Headers</h2>
+      <h2 id="h-status-headers">Request Headers</h2>
       <p>Same authentication headers as the Send e-Invoice endpoint. See <a onclick="nav('overview','Introduction')">Authentication</a>.</p>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Path Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
@@ -418,7 +418,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>document_id</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>The DocumentId returned from the Send e-Invoice response.</td></tr>
         </tbody>
       </table></div>
-      <h2>Response Schema</h2>
+      <h2 id="h-status-response">Response Schema</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
         <tbody>
@@ -428,7 +428,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>ErrorDetails</code></td><td><span class="badge b-arr">Array</span></td><td>Optional. List of error objects if processing failed.</td></tr>
         </tbody>
       </table></div>
-      <h2>Sample Response</h2>
+      <h2 id="h-status-sample">Sample Response</h2>
       <div class="code-wrap">
         <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">HTTP 200 — Success</span></div>
         <pre><span class="p">{</span>
@@ -601,7 +601,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <div class="fstep">Peppol Network</div><div class="farrow">&rarr;</div>
         <div class="fstep">Buyer's System</div>
       </div>
-      <h2>Request Headers</h2>
+      <h2 id="h-be-headers">Request Headers</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Header</th><th>Value</th></tr></thead>
         <tbody>
@@ -613,9 +613,9 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <div class="code-wrap"><div class="code-head"><span class="code-lang">HTTP</span><span class="code-lbl">Sandbox</span></div>
         <pre><span class="mt">POST</span> <span class="u">https://api-sandbox.eu.cleartax.com/einvoice/v1/documents/generate</span></pre>
       </div>
-      <h2>Invoice Types</h2>
+      <h2 id="h-be-invoice-types">Invoice Types</h2>
       <p>See <a onclick="nav('codelists','Code Lists')">Code Lists</a> for Belgium invoice type codes.</p>
-      <h2>PINT EU Extensions</h2>
+      <h2 id="h-be-extensions">PINT EU Extensions</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Extension Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
         <tbody>
@@ -625,9 +625,9 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>extensions.pintEU.precedingInvoice</code></td><td><span class="badge b-arr">Array</span></td><td><span class="badge b-cond">Conditional</span></td><td>Reference to preceding invoice. Required for credit and debit notes.</td></tr>
         </tbody>
       </table></div>
-      <h2>Field Mapping</h2>
+      <h2 id="h-be-field-mapping">Field Mapping</h2>
       <p>See the <a onclick="nav('be-map','Belgium — Field Mapping')">Belgium Field Mapping</a> page for a mapping between ClearTax JSON fields and PINT EU / UBL 2.1 field names.</p>
-      <h2>Sample Payload</h2>
+      <h2 id="h-be-sample">Sample Payload</h2>
       <div class="code-wrap">
         <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">eInvoice Object (DocumentData decoded)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><span class="p">{</span>
@@ -751,7 +751,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <div class="fstep">LHDN MyInvois</div><div class="farrow">&rarr;</div>
         <div class="fstep">Stamp and Return</div>
       </div>
-      <h2>Request Headers</h2>
+      <h2 id="h-my-headers">Request Headers</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Header</th><th>Value</th></tr></thead>
         <tbody>
@@ -763,9 +763,9 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <div class="code-wrap"><div class="code-head"><span class="code-lang">HTTP</span><span class="code-lbl">Sandbox</span></div>
         <pre><span class="mt">POST</span> <span class="u">https://api-sandbox.my.cleartax.com/einvoice/v1/documents/generate</span></pre>
       </div>
-      <h2>Invoice Types</h2>
+      <h2 id="h-my-invoice-types">Invoice Types</h2>
       <p>See <a onclick="nav('codelists','Code Lists')">Code Lists</a> for Malaysia invoice type codes (01–14).</p>
-      <h2>Malaysia-specific Fields</h2>
+      <h2 id="h-my-extensions">Malaysia-specific Fields</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
         <tbody>
@@ -778,9 +778,9 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>extensions.my.prepaidPayment[].receivedDate</code></td><td><span class="badge b-str">Date</span></td><td><span class="badge b-opt">Optional</span></td><td>Date prepaid payment was received (YYYY-MM-DD).</td></tr>
         </tbody>
       </table></div>
-      <h2>Field Mapping</h2>
+      <h2 id="h-my-field-mapping">Field Mapping</h2>
       <p>See the <a onclick="nav('my-map','Malaysia — Field Mapping')">Malaysia Field Mapping</a> page for a mapping between ClearTax JSON fields and LHDN MyInvois field names.</p>
-      <h2>Sample Payload</h2>
+      <h2 id="h-my-sample">Sample Payload</h2>
       <div class="code-wrap">
         <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">eInvoice Object (DocumentData decoded)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><span class="p">{</span>
@@ -891,7 +891,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <div class="fstep">Peppol Network</div><div class="farrow">&rarr;</div>
         <div class="fstep">Buyer / FTA</div>
       </div>
-      <h2>Request Headers</h2>
+      <h2 id="h-ae-headers">Request Headers</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Header</th><th>Value</th></tr></thead>
         <tbody>
@@ -903,7 +903,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <div class="code-wrap"><div class="code-head"><span class="code-lang">HTTP</span><span class="code-lbl">Sandbox</span></div>
         <pre><span class="mt">POST</span> <span class="u">https://api-sandbox.mea.cleartax.com/einvoice/v1/documents/generate</span></pre>
       </div>
-      <h2>PINT AE Extensions</h2>
+      <h2 id="h-ae-extensions">PINT AE Extensions</h2>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Extension Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
         <tbody>
@@ -921,9 +921,9 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>extensions.pintAE.invoiceLine[].typeOfGoodsServices</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Goods or services subject to Reverse Charge Mechanism.</td></tr>
         </tbody>
       </table></div>
-      <h2>Field Mapping</h2>
+      <h2 id="h-ae-field-mapping">Field Mapping</h2>
       <p>See the <a onclick="nav('ae-map','UAE — Field Mapping')">UAE Field Mapping</a> page for a mapping between ClearTax JSON fields and PINT AE business terms.</p>
-      <h2>Sample Payload</h2>
+      <h2 id="h-ae-sample">Sample Payload</h2>
       <div class="code-wrap">
         <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">eInvoice Object with PINT AE Extensions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
         <pre><span class="p">{</span>
@@ -1005,12 +1005,94 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 </div>
 
 <script>
-function nav(page, label) {
+let _scrollCleanup = null;
+let _activePage = 'overview';
+
+function nav(page, label, anchor) {
+  // Tear down previous scroll listener
+  if (_scrollCleanup) { _scrollCleanup(); _scrollCleanup = null; }
+
+  // Switch page visibility
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   document.getElementById('bc').textContent = label;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  _activePage = page;
+
+  // Update sidebar active state immediately
+  _setActiveNav(page, anchor || null);
+
+  // Scroll content area
+  if (anchor) {
+    const target = document.getElementById(anchor);
+    if (target) {
+      setTimeout(() => target.scrollIntoView({ behavior: 'smooth', block: 'start' }), 60);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Wire up scroll-based tracking for this page
+  _setupScrollTracking(page);
 }
+
+function _setActiveNav(page, anchor) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  let el = null;
+  if (anchor) {
+    el = document.querySelector(`.nav-item[data-page="${page}"][data-anchor="${anchor}"]`);
+  }
+  if (!el) {
+    el = document.querySelector(`.nav-item[data-page="${page}"]:not([data-anchor])`);
+  }
+  if (el) {
+    el.classList.add('active');
+    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+}
+
+function _setupScrollTracking(page) {
+  const pageEl = document.getElementById('page-' + page);
+  if (!pageEl) return;
+  const headings = Array.from(pageEl.querySelectorAll('h2[id]'));
+  if (!headings.length) return;
+
+  function onScroll() {
+    if (_activePage !== page) return;
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+
+    // When near the top, highlight the top-level page nav item
+    if (scrollY < 80) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      const topEl = document.querySelector(`.nav-item[data-page="${page}"]:not([data-anchor])`);
+      if (topEl) topEl.classList.add('active');
+      return;
+    }
+
+    // Find the last heading whose top is above the fold (with 130px offset)
+    let current = null;
+    for (const h of headings) {
+      if (h.offsetTop - 130 <= scrollY) current = h;
+    }
+    if (!current) return;
+
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const subEl = document.querySelector(`.nav-item[data-page="${page}"][data-anchor="${current.id}"]`);
+    if (subEl) {
+      subEl.classList.add('active');
+      subEl.scrollIntoView({ block: 'nearest' });
+    } else {
+      // Heading exists but has no mapped sub-nav item — highlight the page-level item
+      const topEl = document.querySelector(`.nav-item[data-page="${page}"]:not([data-anchor])`);
+      if (topEl) topEl.classList.add('active');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  _scrollCleanup = () => window.removeEventListener('scroll', onScroll);
+}
+
 function copyCode(btn) {
   const pre = btn.closest('.code-wrap').querySelector('pre');
   navigator.clipboard.writeText(pre.innerText).then(() => {
@@ -1018,6 +1100,9 @@ function copyCode(btn) {
     setTimeout(() => btn.textContent = 'Copy', 1800);
   });
 }
+
+// Initialise scroll tracking for the default page
+document.addEventListener('DOMContentLoaded', () => _setupScrollTracking('overview'));
 </script>
 </body>
 </html>
