@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClearTax Unified e-Invoicing API</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f8f9fb; color: #1a1d23; line-height: 1.65; display: flex; min-height: 100vh; }
+
+#sidebar { width: 268px; min-width: 268px; background: #0f1117; color: #c8ccd4; display: flex; flex-direction: column; position: fixed; top: 0; left: 0; height: 100vh; overflow-y: auto; z-index: 100; scrollbar-width: thin; scrollbar-color: #2a2e38 transparent; }
+#sidebar::-webkit-scrollbar { width: 4px; }
+#sidebar::-webkit-scrollbar-thumb { background: #2a2e38; }
+
+.sidebar-header { padding: 18px 20px 14px; border-bottom: 1px solid #1e2230; }
+.sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.sidebar-logo-mark { background: #2563eb; color: #fff; font-weight: 700; font-size: 12px; padding: 4px 8px; border-radius: 5px; letter-spacing: 0.5px; }
+.sidebar-title { font-size: 13px; font-weight: 600; color: #e2e5ec; }
+.sidebar-sub { font-size: 11px; color: #6b7280; margin-top: 3px; }
+
+.sidebar-section { padding: 16px 0 4px; }
+.sidebar-section-label { padding: 0 20px 7px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #4b5563; }
+.nav-item { display: block; padding: 7px 20px; font-size: 13px; color: #9ca3af; cursor: pointer; border-left: 3px solid transparent; transition: all 0.15s; text-decoration: none; }
+.nav-item:hover { color: #e2e5ec; background: #1a1e2a; }
+.nav-item.active { color: #93c5fd; background: #1a2035; border-left-color: #2563eb; font-weight: 500; }
+.nav-item.sub { padding-left: 32px; font-size: 12.5px; }
+
+.ctag { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; margin-left: 6px; vertical-align: middle; letter-spacing: 0.3px; }
+.ctag-be { background: #1e3a5f; color: #93c5fd; }
+.ctag-my { background: #1a3a2a; color: #6ee7b7; }
+.ctag-ae { background: #3a2a10; color: #fcd34d; }
+
+#main { margin-left: 268px; flex: 1; display: flex; flex-direction: column; }
+.top-bar { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 0 40px; height: 50px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+.breadcrumb { font-size: 13px; color: #6b7280; }
+.breadcrumb span { color: #1a1d23; font-weight: 500; }
+.top-right { display: flex; align-items: center; gap: 10px; }
+.env-tabs { display: flex; gap: 4px; }
+.env-tab { font-size: 12px; padding: 4px 12px; border-radius: 5px; cursor: pointer; border: 1px solid #e5e7eb; background: #f9fafb; color: #6b7280; font-weight: 500; }
+.env-tab.active { background: #1a1d23; color: #fff; border-color: #1a1d23; }
+.ver-badge { background: #eff6ff; color: #2563eb; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 10px; border: 1px solid #bfdbfe; }
+
+.preview-banner { background: #1e3a5f; color: #93c5fd; padding: 10px 20px; font-size: 12.5px; text-align: center; }
+.content-wrap { max-width: 900px; padding: 40px 40px 80px; margin: 0 auto; width: 100%; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+h1 { font-size: 27px; font-weight: 700; color: #0f1117; margin-bottom: 8px; line-height: 1.3; }
+h2 { font-size: 19px; font-weight: 700; color: #0f1117; margin: 38px 0 12px; padding-top: 38px; border-top: 1px solid #e5e7eb; }
+h2.no-border { border-top: none; padding-top: 0; margin-top: 0; }
+h3 { font-size: 15px; font-weight: 600; color: #1a1d23; margin: 22px 0 10px; }
+p { margin-bottom: 14px; color: #374151; }
+ul, ol { padding-left: 22px; margin-bottom: 14px; }
+li { margin-bottom: 5px; color: #374151; }
+a { color: #2563eb; text-decoration: none; cursor: pointer; }
+a:hover { text-decoration: underline; }
+.page-intro { font-size: 14.5px; color: #6b7280; margin-bottom: 28px; line-height: 1.7; }
+.section-tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #6b7280; margin-bottom: 6px; }
+
+.callout { border-radius: 7px; padding: 13px 16px; margin: 18px 0; font-size: 13.5px; border-left: 4px solid; }
+.callout-info { background: #eff6ff; border-color: #2563eb; color: #1e40af; }
+.callout-warn { background: #fffbeb; border-color: #f59e0b; color: #92400e; }
+.callout-note { background: #f9fafb; border-color: #9ca3af; color: #374151; }
+.callout strong { color: inherit; }
+
+.steps { counter-reset: step; display: flex; flex-direction: column; gap: 10px; margin: 18px 0; }
+.step { display: flex; gap: 14px; align-items: flex-start; }
+.step-num { counter-increment: step; min-width: 26px; height: 26px; background: #2563eb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11.5px; font-weight: 700; flex-shrink: 0; margin-top: 3px; }
+.step-num::before { content: counter(step); }
+.step-body { font-size: 13.5px; color: #374151; }
+.step-body strong { color: #111827; }
+
+.tbl-wrap { overflow-x: auto; margin: 14px 0 22px; border-radius: 7px; border: 1px solid #e5e7eb; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; background: #fff; }
+th { background: #f3f4f6; color: #374151; font-weight: 600; text-align: left; padding: 9px 14px; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
+td { padding: 9px 14px; border-bottom: 1px solid #f3f4f6; vertical-align: top; color: #374151; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: #fafafa; }
+td code { font-family: 'SF Mono','Fira Code',Consolas,monospace; font-size: 12px; background: #f3f4f6; padding: 1px 5px; border-radius: 3px; color: #0f1117; white-space: nowrap; }
+
+.badge { display: inline-block; font-size: 10.5px; font-weight: 600; padding: 2px 7px; border-radius: 9px; white-space: nowrap; }
+.b-req  { background: #fee2e2; color: #b91c1c; }
+.b-cond { background: #fef3c7; color: #92400e; }
+.b-opt  { background: #f3f4f6; color: #6b7280; }
+.b-str  { background: #ede9fe; color: #5b21b6; }
+.b-num  { background: #d1fae5; color: #065f46; }
+.b-obj  { background: #fce7f3; color: #9d174d; }
+.b-arr  { background: #dbeafe; color: #1e40af; }
+.b-enum { background: #fef9c3; color: #713f12; }
+
+.endpoint-card { border: 1px solid #e5e7eb; border-radius: 8px; margin: 16px 0; overflow: hidden; background: #fff; }
+.endpoint-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; }
+.method { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 5px; letter-spacing: 0.3px; }
+.m-post { background: #dcfce7; color: #166534; }
+.m-get  { background: #dbeafe; color: #1e40af; }
+.endpoint-url { font-family: 'SF Mono','Fira Code',Consolas,monospace; font-size: 13px; color: #374151; }
+.endpoint-body { padding: 12px 16px; font-size: 13.5px; color: #374151; }
+
+.url-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 22px; }
+.url-card { border: 1px solid #e5e7eb; border-radius: 7px; padding: 14px 16px; background: #fff; }
+.url-card-label { font-size: 10.5px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 10px; }
+.url-row { display: flex; align-items: center; gap: 10px; margin-bottom: 7px; }
+.url-country { font-size: 12px; font-weight: 600; color: #374151; width: 74px; }
+.url-val { font-family: 'SF Mono','Fira Code',Consolas,monospace; font-size: 11.5px; color: #2563eb; }
+
+.country-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 18px 0 28px; }
+.country-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 18px; background: #fff; cursor: pointer; transition: border-color 0.15s, box-shadow 0.15s; }
+.country-card:hover { border-color: #2563eb; box-shadow: 0 3px 10px rgba(37,99,235,.09); }
+.cc-label { display: inline-block; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-bottom: 10px; }
+.cc-name { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+.cc-system { font-size: 12.5px; color: #6b7280; margin-bottom: 12px; line-height: 1.5; }
+.cc-link { font-size: 12.5px; color: #2563eb; font-weight: 500; }
+
+.status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0 22px; }
+.status-item { display: flex; gap: 10px; padding: 9px 12px; background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; }
+.scode { font-family: 'SF Mono','Fira Code',Consolas,monospace; font-size: 12px; font-weight: 700; min-width: 32px; }
+.s2 { color: #166534; } .s4 { color: #92400e; } .s5 { color: #991b1b; }
+.sdesc { font-size: 12.5px; color: #374151; }
+
+.code-wrap { margin: 14px 0 22px; border-radius: 8px; overflow: hidden; border: 1px solid #1e2230; }
+.code-head { background: #1a1e2a; padding: 8px 14px; display: flex; align-items: center; justify-content: space-between; }
+.code-lang { font-size: 10.5px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.8px; }
+.code-lbl  { font-size: 11px; color: #4b5563; }
+.copy-btn { font-size: 11px; color: #6b7280; background: #2a2e38; border: none; padding: 3px 9px; border-radius: 4px; cursor: pointer; font-family: inherit; }
+.copy-btn:hover { color: #e2e5ec; }
+pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-family: 'SF Mono','Fira Code',Consolas,monospace; font-size: 12.5px; line-height: 1.7; }
+.k { color: #7dd3fc; } .s { color: #86efac; } .n { color: #fde68a; }
+.b { color: #f9a8d4; } .hk { color: #c4b5fd; } .u { color: #fdba74; } .mt { color: #86efac; font-weight: 700; }
+.p { color: #9ca3af; }
+
+.flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 16px 0 24px; }
+.fstep { background: #fff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 9px 14px; font-size: 12.5px; color: #374151; font-weight: 500; text-align: center; }
+.farrow { color: #9ca3af; padding: 0 8px; font-size: 16px; }
+
+.placeholder-box { border: 2px dashed #d1d5db; border-radius: 8px; padding: 32px; text-align: center; margin: 20px 0; background: #fafafa; }
+.placeholder-box strong { color: #6b7280; display: block; font-size: 14px; margin-bottom: 6px; }
+.placeholder-box p { color: #9ca3af; font-size: 13.5px; margin: 0; }
+</style>
+</head>
+<body>
+
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <div class="sidebar-logo-mark">CT</div>
+      <div class="sidebar-title">Unified e-Invoicing API</div>
+    </div>
+    <div class="sidebar-sub">Global · v1.0</div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Overview</div>
+    <a class="nav-item active" onclick="nav('overview','Introduction')">Introduction</a>
+    <a class="nav-item sub" onclick="nav('overview','Introduction')">How to Use the API</a>
+    <a class="nav-item sub" onclick="nav('overview','Introduction')">Authentication</a>
+    <a class="nav-item sub" onclick="nav('overview','Introduction')">Base URLs</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">API Reference</div>
+    <a class="nav-item" onclick="nav('send','Send e-Invoice')">Send e-Invoice <span class="method m-post" style="font-size:9px;padding:1px 5px;margin-left:4px">POST</span></a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Request Headers</a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Request Body</a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Request Schema</a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Sample Request</a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Response Schema</a>
+    <a class="nav-item sub" onclick="nav('codelists','Code Lists')">Code Lists</a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">Error Codes</a>
+    <a class="nav-item sub" onclick="nav('send','Send e-Invoice')">API Constraints</a>
+    <a class="nav-item" onclick="nav('status','Status Check')">Status Check <span class="method m-get" style="font-size:9px;padding:1px 5px;margin-left:4px">GET</span></a>
+    <a class="nav-item sub" onclick="nav('status','Status Check')">Request Headers</a>
+    <a class="nav-item sub" onclick="nav('status','Status Check')">Response Schema</a>
+    <a class="nav-item sub" onclick="nav('status','Status Check')">Sample Response</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Country Guides</div>
+    <a class="nav-item" onclick="nav('be','Belgium')">Belgium <span class="ctag ctag-be">BE</span></a>
+    <a class="nav-item sub" onclick="nav('be','Belgium')">Country Overview</a>
+    <a class="nav-item sub" onclick="nav('be','Belgium')">Invoice Types</a>
+    <a class="nav-item sub" onclick="nav('be','Belgium')">Extensions</a>
+    <a class="nav-item sub" onclick="nav('be-map','Belgium — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" onclick="nav('be','Belgium')">Sample Payload</a>
+    <a class="nav-item" onclick="nav('my','Malaysia')">Malaysia <span class="ctag ctag-my">MY</span></a>
+    <a class="nav-item sub" onclick="nav('my','Malaysia')">Country Overview</a>
+    <a class="nav-item sub" onclick="nav('my','Malaysia')">Invoice Types</a>
+    <a class="nav-item sub" onclick="nav('my','Malaysia')">Extensions</a>
+    <a class="nav-item sub" onclick="nav('my-map','Malaysia — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" onclick="nav('my','Malaysia')">Sample Payload</a>
+    <a class="nav-item" onclick="nav('ae','UAE')">UAE <span class="ctag ctag-ae">AE</span></a>
+    <a class="nav-item sub" onclick="nav('ae','UAE')">Country Overview</a>
+    <a class="nav-item sub" onclick="nav('ae','UAE')">Invoice Types</a>
+    <a class="nav-item sub" onclick="nav('ae','UAE')">PINT AE Extensions</a>
+    <a class="nav-item sub" onclick="nav('ae-map','UAE — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" onclick="nav('ae','UAE')">Sample Payload</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Resources</div>
+    <a class="nav-item" onclick="nav('codelists','Code Lists')">Code Lists</a>
+    <a class="nav-item">Validations and Errors</a>
+    <a class="nav-item">Changelog</a>
+  </div>
+</nav>
+
+<div id="main">
+  <div class="preview-banner">Documentation Preview — Unified e-Invoicing API (Belgium · Malaysia · UAE)</div>
+  <div class="top-bar">
+    <div class="breadcrumb">Unified e-Invoicing API &nbsp;/&nbsp; <span id="bc">Introduction</span></div>
+    <div class="top-right">
+      <div class="env-tabs">
+        <div class="env-tab active">Sandbox</div>
+        <div class="env-tab">Production</div>
+      </div>
+      <span class="ver-badge">v1.0</span>
+    </div>
+  </div>
+
+  <div class="content-wrap">
+
+    <!-- OVERVIEW -->
+    <div id="page-overview" class="page active">
+      <div class="section-tag">Overview</div>
+      <h1>Global e-Invoicing — Unified API</h1>
+      <p class="page-intro">A single API integration to generate, validate, and submit compliant e-invoices across multiple countries. ClearTax validates your payload and routes it to the appropriate government platform or Peppol network based on the country specified in the request header.</p>
+      <div class="callout callout-info"><strong>One schema, multiple countries.</strong> The Unified API uses a single JSON payload structure inspired by UBL and PINT. Country-specific fields are added via an <code>extensions</code> object, keeping your core integration unchanged as you expand to new markets.</div>
+
+      <h2 class="no-border" style="margin-top:28px">Supported Countries</h2>
+      <div class="country-grid">
+        <div class="country-card" onclick="nav('be','Belgium')">
+          <span class="cc-label ctag-be">BE</span>
+          <div class="cc-name">Belgium</div>
+          <div class="cc-system">Peppol network via PINT EU / PINT BE. VAT-based entity identification.</div>
+          <div class="cc-link">View Belgium guide &rarr;</div>
+        </div>
+        <div class="country-card" onclick="nav('my','Malaysia')">
+          <span class="cc-label ctag-my">MY</span>
+          <div class="cc-name">Malaysia</div>
+          <div class="cc-system">MyInvois platform (LHDN). TIN-based identification. 14 document types supported.</div>
+          <div class="cc-link">View Malaysia guide &rarr;</div>
+        </div>
+        <div class="country-card" onclick="nav('ae','UAE')">
+          <span class="cc-label ctag-ae">AE</span>
+          <div class="cc-name">UAE</div>
+          <div class="cc-system">Peppol network via PINT AE. TRN-based identification. AED reporting required.</div>
+          <div class="cc-link">View UAE guide &rarr;</div>
+        </div>
+      </div>
+
+      <h2>How to Use the API</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Onboard on ClearTax</strong> — Create a workspace on the demo environment for testing and a production workspace for live invoices.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Add countries</strong> — Enable the countries you operate in from your workspace settings.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Configure business entities</strong> — Add entity identifiers (VAT / TIN / TRN) and branches under Business Settings.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Generate an API client and Auth Token</strong> — Each workspace has its own auth token. Belgium, Malaysia, and UAE require separate tokens.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Build your payload</strong> — Start with common fields, then add country-specific extensions for your target country.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Send and track</strong> — Submit via the Send API, track processing via Status Check, and optionally trigger PDF generation or buyer email.</div></div>
+      </div>
+
+      <h2>Authentication</h2>
+      <p>All requests must include a valid auth token. The business identifier header is conditional on the country.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Header</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>x-cleartax-auth-token</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>User auth token. Unique per workspace.</td></tr>
+          <tr><td><code>x-clear-country-code</code></td><td><span class="badge b-enum">Enum</span></td><td><span class="badge b-req">Mandatory</span></td><td>Country for the invoice: <code>BE</code>, <code>MY</code>, <code>AE</code>, <code>DE</code></td></tr>
+          <tr><td><code>x-clear-vat</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>VAT of the entity. Required when country code is <code>BE</code> or <code>DE</code>.</td></tr>
+          <tr><td><code>x-clear-tin</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>TIN of the entity. Required when country code is <code>MY</code>.</td></tr>
+          <tr><td><code>x-clear-trn</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>TRN of the entity. Required when country code is <code>AE</code>.</td></tr>
+          <tr><td><code>x-clear-branch</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Branch or store name from the account.</td></tr>
+          <tr><td><code>x-request-id</code></td><td><span class="badge b-str">UUID</span></td><td><span class="badge b-opt">Optional</span></td><td>Unique request ID for debugging. Must be unique per request.</td></tr>
+          <tr><td><code>Content-Type</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Must be <code>application/json</code>.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Base URLs</h2>
+      <div class="url-grid">
+        <div class="url-card">
+          <div class="url-card-label">Sandbox (Demo / Testing)</div>
+          <div class="url-row"><span class="url-country">Belgium</span><span class="url-val">https://api-sandbox.eu.cleartax.com</span></div>
+          <div class="url-row"><span class="url-country">Malaysia</span><span class="url-val">https://api-sandbox.my.cleartax.com</span></div>
+          <div class="url-row"><span class="url-country">UAE</span><span class="url-val">https://api-sandbox.mea.cleartax.com</span></div>
+        </div>
+        <div class="url-card">
+          <div class="url-card-label">Production</div>
+          <div class="url-row"><span class="url-country">Belgium</span><span class="url-val">https://api.eu.cleartax.com</span></div>
+          <div class="url-row"><span class="url-country">Malaysia</span><span class="url-val">https://api.my.cleartax.com</span></div>
+          <div class="url-row"><span class="url-country">UAE</span><span class="url-val">https://api.mea.cleartax.com</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEND E-INVOICE -->
+    <div id="page-send" class="page">
+      <div class="section-tag">API Reference</div>
+      <h1>Send e-Invoice</h1>
+      <p class="page-intro">Submit one or more invoice documents for validation and routing. ClearTax validates the payload, transforms it to the country-specific format, and submits to the government platform or Peppol network.</p>
+      <div class="endpoint-card">
+        <div class="endpoint-header"><span class="method m-post">POST</span><span class="endpoint-url">/einvoice/v1/documents/generate</span></div>
+        <div class="endpoint-body">Supports up to <strong>10 documents per request</strong>. <code>DocumentData</code> must be a Base64-encoded JSON string of the eInvoice object.</div>
+      </div>
+
+      <h2>Request Headers</h2>
+      <p>See the <a onclick="nav('overview','Introduction')">Authentication</a> section for the full header reference.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Query Parameter</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>einvoice-type</code></td><td><span class="badge b-enum">Enum</span></td><td>Default: <code>SALES</code>. Currently only <code>SALES</code> is supported.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Request Body</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>Documents</code></td><td><span class="badge b-arr">Array</span></td><td><span class="badge b-req">Mandatory</span></td><td>List of invoice documents. Min: 1, Max: 10.</td></tr>
+          <tr><td><code>Documents[].DocumentData</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Base64-encoded JSON of the eInvoice object.</td></tr>
+          <tr><td><code>Documents[].DocumentFormat</code></td><td><span class="badge b-enum">Enum</span></td><td><span class="badge b-req">Mandatory</span></td><td>Format of the document data. Only <code>JSON</code> is supported.</td></tr>
+          <tr><td><code>Documents[].CustomFields</code></td><td><span class="badge b-obj">Object</span></td><td><span class="badge b-opt">Optional</span></td><td>Key-value pairs for custom fields in PDF templates or reports.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Request Schema</h2>
+      <div class="placeholder-box">
+        <strong>Request Schema — Placeholder</strong>
+        <p>The base JSON schema covering fields common across all countries will be documented here.</p>
+      </div>
+
+      <h2>Sample Request</h2>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">HTTP Headers</span></div>
+        <pre><span class="hk">x-cleartax-auth-token:</span> <span class="s">eyJhbGciOiJIUzI1NiJ9...</span>
+<span class="hk">x-clear-country-code:</span>  <span class="s">BE</span>
+<span class="hk">x-clear-vat:</span>           <span class="s">BE0120240102</span>
+<span class="hk">Content-Type:</span>          <span class="s">application/json</span></pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">Request Body</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="p">{</span>
+  <span class="k">"Documents"</span><span class="p">: [{</span>
+    <span class="k">"DocumentData"</span><span class="p">:</span> <span class="s">"&lt;base64-encoded eInvoice JSON&gt;"</span><span class="p">,</span>
+    <span class="k">"DocumentFormat"</span><span class="p">:</span> <span class="s">"JSON"</span><span class="p">,</span>
+    <span class="k">"CustomFields"</span><span class="p">: {</span> <span class="k">"Internal Number"</span><span class="p">:</span> <span class="s">"INV-0000001"</span> <span class="p">}</span>
+  <span class="p">}]</span>
+<span class="p">}</span></pre>
+      </div>
+
+      <h2>Response Status Codes</h2>
+      <div class="status-grid">
+        <div class="status-item"><span class="scode s2">200</span><span class="sdesc">Success. Invoice accepted and processed.</span></div>
+        <div class="status-item"><span class="scode s4">400</span><span class="sdesc">Bad Request. Invalid payload or missing fields.</span></div>
+        <div class="status-item"><span class="scode s4">401</span><span class="sdesc">Unauthorized. Auth token missing or invalid.</span></div>
+        <div class="status-item"><span class="scode s4">403</span><span class="sdesc">Forbidden. User lacks permission for this entity.</span></div>
+        <div class="status-item"><span class="scode s4">409</span><span class="sdesc">Conflict. Duplicate document ID.</span></div>
+        <div class="status-item"><span class="scode s4">429</span><span class="sdesc">Rate Limit Exceeded.</span></div>
+        <div class="status-item"><span class="scode s5">500</span><span class="sdesc">Internal Server Error.</span></div>
+        <div class="status-item"><span class="scode s5">503</span><span class="sdesc">Service Unavailable.</span></div>
+      </div>
+
+      <h2>Response Schema</h2>
+      <h3>Document Response Object</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>Success</code></td><td><span class="badge b-str">Boolean</span></td><td>Indicates whether the overall request was successfully processed.</td></tr>
+          <tr><td><code>DocumentResponses</code></td><td><span class="badge b-arr">Array</span></td><td>List of response objects, one per document in the request.</td></tr>
+          <tr><td><code>DocumentResponses[].DocumentId</code></td><td><span class="badge b-str">String</span></td><td>Unique document ID generated by ClearTax. Use in the Status Check API.</td></tr>
+          <tr><td><code>DocumentResponses[].UniqueId</code></td><td><span class="badge b-str">String</span></td><td>Unique ID to distinctly identify the document.</td></tr>
+          <tr><td><code>DocumentResponses[].Success</code></td><td><span class="badge b-str">Boolean</span></td><td>Whether this specific document was successfully processed.</td></tr>
+          <tr><td><code>DocumentResponses[].ErrorDetails</code></td><td><span class="badge b-arr">Array</span></td><td>Optional. List of error objects.</td></tr>
+          <tr><td><code>DocumentResponses[].WarningDetails</code></td><td><span class="badge b-arr">Array</span></td><td>Optional. List of warning objects.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Error Detail Object</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>ErrorCode</code></td><td><span class="badge b-str">String</span></td><td>Code identifying the error.</td></tr>
+          <tr><td><code>ErrorMessage</code></td><td><span class="badge b-str">String</span></td><td>Human-readable error message.</td></tr>
+          <tr><td><code>ErrorSource</code></td><td><span class="badge b-str">String</span></td><td>Source of the error. Value: <code>CLEARTAX</code>.</td></tr>
+          <tr><td><code>Path</code></td><td><span class="badge b-str">String</span></td><td>For field-level validation errors, points to the offending field path.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Code Lists</h2>
+      <p>See the <a onclick="nav('codelists','Code Lists')">Code Lists</a> page for all enumerated values including invoice type codes, tax category codes, payment means codes, and unit of measure codes.</p>
+
+      <h2>Error Codes</h2>
+      <div class="callout callout-note">The complete list of error codes, messages, applicable countries, causes, and resolutions will be published in the <strong>Validations and Errors</strong> reference.</div>
+
+      <h2>API Constraints</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Constraint</th><th>Details</th></tr></thead>
+        <tbody>
+          <tr><td>Authentication</td><td>Requires a valid auth token. Returns <code>401</code> if missing or expired. Returns <code>403</code> if the user lacks Admin role for the entity.</td></tr>
+          <tr><td>Batch size</td><td>Minimum 1 document, maximum 10 documents per request.</td></tr>
+          <tr><td>Rate limiting</td><td>To be documented.</td></tr>
+          <tr><td>Payload size</td><td>To be documented.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- STATUS CHECK -->
+    <div id="page-status" class="page">
+      <div class="section-tag">API Reference</div>
+      <h1>Status Check</h1>
+      <p class="page-intro">Retrieve the current processing status of a previously submitted document using the <code>DocumentId</code> returned from the Send e-Invoice API.</p>
+      <div class="endpoint-card">
+        <div class="endpoint-header"><span class="method m-get">GET</span><span class="endpoint-url">/einvoice/v1/documents/{document_id}/status</span></div>
+      </div>
+      <h2>Request Headers</h2>
+      <p>Same authentication headers as the Send e-Invoice endpoint. See <a onclick="nav('overview','Introduction')">Authentication</a>.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Path Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>document_id</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>The DocumentId returned from the Send e-Invoice response.</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Response Schema</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>Success</code></td><td><span class="badge b-str">Boolean</span></td><td>Whether the status check request was processed successfully.</td></tr>
+          <tr><td><code>DocumentId</code></td><td><span class="badge b-str">String</span></td><td>The ClearTax document ID.</td></tr>
+          <tr><td><code>Status</code></td><td><span class="badge b-enum">Enum</span></td><td><code>Pending</code>, <code>Failed</code>, <code>Submitted to exchange network</code>, <code>Delivered to buyer network</code></td></tr>
+          <tr><td><code>ErrorDetails</code></td><td><span class="badge b-arr">Array</span></td><td>Optional. List of error objects if processing failed.</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Sample Response</h2>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">HTTP 200 — Success</span></div>
+        <pre><span class="p">{</span>
+  <span class="k">"Success"</span><span class="p">:</span> <span class="b">true</span><span class="p">,</span>
+  <span class="k">"DocumentId"</span><span class="p">:</span> <span class="s">"686d022e418c8b4e000a1feb"</span><span class="p">,</span>
+  <span class="k">"Status"</span><span class="p">:</span> <span class="s">"Delivered to buyer network"</span><span class="p">,</span>
+  <span class="k">"ErrorDetails"</span><span class="p">:</span> <span class="b">null</span>
+<span class="p">}</span></pre>
+      </div>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">HTTP 404 — Not Found</span></div>
+        <pre><span class="p">{</span>
+  <span class="k">"ErrorDetails"</span><span class="p">: [{</span>
+    <span class="k">"ErrorCode"</span><span class="p">:</span> <span class="s">"300102"</span><span class="p">,</span>
+    <span class="k">"ErrorMessage"</span><span class="p">:</span> <span class="s">"No data found for the selected Document ID"</span><span class="p">,</span>
+    <span class="k">"ErrorSource"</span><span class="p">:</span> <span class="s">"CLEARTAX"</span><span class="p">,</span>
+    <span class="k">"Path"</span><span class="p">:</span> <span class="b">null</span>
+  <span class="p">}]</span>
+<span class="p">}</span></pre>
+      </div>
+    </div>
+
+    <!-- CODE LISTS -->
+    <div id="page-codelists" class="page">
+      <div class="section-tag">API Reference</div>
+      <h1>Code Lists</h1>
+      <p class="page-intro">Enumerated values and code lists referenced in the e-Invoice payload. Where a field accepts only specific values, the accepted codes are listed here by category.</p>
+
+      <h2 class="no-border" style="margin-top:20px">Country Codes</h2>
+      <p>Used in the <code>x-clear-country-code</code> request header.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Country</th><th>Region</th></tr></thead>
+        <tbody>
+          <tr><td><code>BE</code></td><td>Belgium</td><td>EU</td></tr>
+          <tr><td><code>DE</code></td><td>Germany</td><td>EU</td></tr>
+          <tr><td><code>MY</code></td><td>Malaysia</td><td>SEA</td></tr>
+          <tr><td><code>AE</code></td><td>United Arab Emirates</td><td>MEA</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Invoice Type Codes</h2>
+      <h3>Belgium and Germany (EN 16931 / PINT EU)</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Document Type</th></tr></thead>
+        <tbody>
+          <tr><td><code>380</code></td><td>Commercial Invoice</td></tr>
+          <tr><td><code>381</code></td><td>Credit Note</td></tr>
+          <tr><td><code>383</code></td><td>Debit Note</td></tr>
+          <tr><td><code>384</code></td><td>Corrected Invoice</td></tr>
+          <tr><td><code>388</code></td><td>Tax Invoice</td></tr>
+          <tr><td><code>389</code></td><td>Self-Billed Invoice</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Malaysia (LHDN MyInvois)</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Document Type</th><th>Self-Billed</th></tr></thead>
+        <tbody>
+          <tr><td><code>01</code></td><td>Invoice</td><td>No</td></tr>
+          <tr><td><code>02</code></td><td>Credit Note</td><td>No</td></tr>
+          <tr><td><code>03</code></td><td>Debit Note</td><td>No</td></tr>
+          <tr><td><code>04</code></td><td>Refund Note</td><td>No</td></tr>
+          <tr><td><code>11</code></td><td>Self-Billed Invoice</td><td>Yes</td></tr>
+          <tr><td><code>12</code></td><td>Self-Billed Credit Note</td><td>Yes</td></tr>
+          <tr><td><code>13</code></td><td>Self-Billed Debit Note</td><td>Yes</td></tr>
+          <tr><td><code>14</code></td><td>Self-Billed Refund Note</td><td>Yes</td></tr>
+        </tbody>
+      </table></div>
+      <h3>UAE (PINT AE)</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Document Type</th></tr></thead>
+        <tbody>
+          <tr><td><code>388</code></td><td>Tax Invoice</td></tr>
+          <tr><td><code>381</code></td><td>Credit Note</td></tr>
+          <tr><td><code>383</code></td><td>Debit Note</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Tax Category Codes</h2>
+      <p>Used in <code>taxTotal[].taxSubtotal[].taxCategory.id</code> and <code>invoiceLine[].item.classifiedTaxCategory[].id</code>.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Description</th><th>BE</th><th>MY</th><th>AE</th></tr></thead>
+        <tbody>
+          <tr><td><code>S</code></td><td>Standard rate</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td><code>Z</code></td><td>Zero-rated (0%)</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td><code>E</code></td><td>Exempt from tax</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+          <tr><td><code>AE</code></td><td>Reverse Charge</td><td>Yes</td><td>—</td><td>Yes</td></tr>
+          <tr><td><code>K</code></td><td>Intra-EU supply / zero-rated export</td><td>Yes</td><td>—</td><td>—</td></tr>
+          <tr><td><code>G</code></td><td>Free export outside EU</td><td>Yes</td><td>—</td><td>—</td></tr>
+          <tr><td><code>O</code></td><td>Outside scope of tax</td><td>Yes</td><td>—</td><td>Yes</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Payment Means Codes</h2>
+      <p>Selected codes from UN/ECE 4461, used in <code>paymentMeans.paymentMeansCode</code>.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>10</code></td><td>In cash</td></tr>
+          <tr><td><code>20</code></td><td>Cheque</td></tr>
+          <tr><td><code>30</code></td><td>Credit transfer</td></tr>
+          <tr><td><code>42</code></td><td>Payment to bank account</td></tr>
+          <tr><td><code>48</code></td><td>Bank card</td></tr>
+          <tr><td><code>49</code></td><td>Direct debit</td></tr>
+          <tr><td><code>57</code></td><td>Standing agreement</td></tr>
+          <tr><td><code>58</code></td><td>SEPA credit transfer</td></tr>
+          <tr><td><code>59</code></td><td>SEPA direct debit</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Unit of Measure Codes</h2>
+      <p>Common codes from UN/ECE Recommendation 20, used in <code>invoicedQuantity.unitCode</code>.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>EA</code></td><td>Each (unit)</td></tr>
+          <tr><td><code>KGM</code></td><td>Kilogram</td></tr>
+          <tr><td><code>MTR</code></td><td>Metre</td></tr>
+          <tr><td><code>LTR</code></td><td>Litre</td></tr>
+          <tr><td><code>PCE</code></td><td>Piece</td></tr>
+          <tr><td><code>SET</code></td><td>Set</td></tr>
+          <tr><td><code>HR</code></td><td>Hour</td></tr>
+          <tr><td><code>DAY</code></td><td>Day</td></tr>
+          <tr><td><code>MON</code></td><td>Month</td></tr>
+          <tr><td><code>ANN</code></td><td>Year</td></tr>
+          <tr><td><code>TNE</code></td><td>Metric tonne</td></tr>
+          <tr><td><code>MTQ</code></td><td>Cubic metre</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Endpoint Scheme IDs</h2>
+      <p>Used in <code>accountingSupplierParty.party.endpointID.schemeID</code> and <code>accountingCustomerParty.party.endpointID.schemeID</code>.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Scheme ID</th><th>Description</th><th>Country</th></tr></thead>
+        <tbody>
+          <tr><td><code>9925</code></td><td>Belgian VAT number</td><td>BE</td></tr>
+          <tr><td><code>0208</code></td><td>Belgian enterprise number (KBO/CBE)</td><td>BE</td></tr>
+          <tr><td><code>0193</code></td><td>Belgian company number</td><td>BE</td></tr>
+          <tr><td><code>0088</code></td><td>EAN Location Code (GLN)</td><td>BE, DE</td></tr>
+          <tr><td><code>TIN</code></td><td>Tax Identification Number</td><td>MY</td></tr>
+          <tr><td><code>BRN</code></td><td>Business Registration Number</td><td>MY</td></tr>
+          <tr><td><code>SST</code></td><td>Sales and Service Tax number</td><td>MY</td></tr>
+          <tr><td><code>NRIC</code></td><td>National Registration Identity Card</td><td>MY</td></tr>
+          <tr><td><code>PASSPORT</code></td><td>Passport number</td><td>MY, AE</td></tr>
+          <tr><td><code>ARMY</code></td><td>Military identification</td><td>MY</td></tr>
+        </tbody>
+      </table></div>
+
+      <h2>Supply Type Codes</h2>
+      <p>Used in <code>supplyType</code>. Mandatory for Malaysia.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Code</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>B2B</code></td><td>Business to Business</td></tr>
+          <tr><td><code>B2C</code></td><td>Business to Consumer</td></tr>
+          <tr><td><code>B2G</code></td><td>Business to Government</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- BELGIUM -->
+    <div id="page-be" class="page">
+      <div class="section-tag">Country Guide</div>
+      <h1>Belgium <span class="ctag ctag-be" style="font-size:14px;padding:3px 10px;vertical-align:middle">BE</span></h1>
+      <p class="page-intro">Belgium mandates e-invoicing via the Peppol network using the PINT EU specification, extended by the PINT BE Belgian localisation. Invoices are delivered to the buyer's Peppol endpoint through ClearTax's EU regional infrastructure.</p>
+      <h2 class="no-border" style="margin-top:20px">Submission Flow</h2>
+      <div class="flow">
+        <div class="fstep">Your System</div><div class="farrow">&rarr;</div>
+        <div class="fstep">ClearTax API</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Validation and Transform</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Peppol Network</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Buyer's System</div>
+      </div>
+      <h2>Request Headers</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Header</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><code>x-clear-country-code</code></td><td><code>BE</code></td></tr>
+          <tr><td><code>x-clear-vat</code></td><td>VAT number of the Belgian entity (e.g. <code>BE0120240102</code>)</td></tr>
+          <tr><td><code>x-cleartax-auth-token</code></td><td>EU workspace auth token</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-wrap"><div class="code-head"><span class="code-lang">HTTP</span><span class="code-lbl">Sandbox</span></div>
+        <pre><span class="mt">POST</span> <span class="u">https://api-sandbox.eu.cleartax.com/einvoice/v1/documents/generate</span></pre>
+      </div>
+      <h2>Invoice Types</h2>
+      <p>See <a onclick="nav('codelists','Code Lists')">Code Lists</a> for Belgium invoice type codes.</p>
+      <h2>PINT EU Extensions</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Extension Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>extensions.pintEU.invoiceTotalVatAmountInAccountingCurrency</code></td><td><span class="badge b-num">Number</span></td><td><span class="badge b-cond">Conditional</span></td><td>Total VAT in accounting currency. Required if tax currency differs from document currency.</td></tr>
+          <tr><td><code>extensions.pintEU.vatAccountingCurrencyCode</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>Accounting currency code (ISO 4217).</td></tr>
+          <tr><td><code>extensions.pintEU.sellerTaxRepresentative</code></td><td><span class="badge b-obj">Object</span></td><td><span class="badge b-opt">Optional</span></td><td>Tax representative party for the seller.</td></tr>
+          <tr><td><code>extensions.pintEU.precedingInvoice</code></td><td><span class="badge b-arr">Array</span></td><td><span class="badge b-cond">Conditional</span></td><td>Reference to preceding invoice. Required for credit and debit notes.</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Field Mapping</h2>
+      <p>See the <a onclick="nav('be-map','Belgium — Field Mapping')">Belgium Field Mapping</a> page for a mapping between ClearTax JSON fields and PINT EU / UBL 2.1 field names.</p>
+      <h2>Sample Payload</h2>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">eInvoice Object (DocumentData decoded)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="p">{</span>
+  <span class="k">"id"</span><span class="p">:</span> <span class="s">"INV-2025-BE-001"</span><span class="p">,</span>
+  <span class="k">"issueDate"</span><span class="p">:</span> <span class="s">"2025-08-07"</span><span class="p">,</span>
+  <span class="k">"invoiceTypeCode"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"380"</span> <span class="p">},</span>
+  <span class="k">"documentCurrencyCode"</span><span class="p">:</span> <span class="s">"EUR"</span><span class="p">,</span>
+  <span class="k">"accountingSupplierParty"</span><span class="p">: {</span>
+    <span class="k">"party"</span><span class="p">: {</span>
+      <span class="k">"endpointID"</span><span class="p">: {</span> <span class="k">"schemeID"</span><span class="p">:</span> <span class="s">"9925"</span><span class="p">,</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"BE0120240102"</span> <span class="p">},</span>
+      <span class="k">"partyTaxScheme"</span><span class="p">: [{</span> <span class="k">"companyID"</span><span class="p">:</span> <span class="s">"BE0120240102"</span><span class="p">,</span> <span class="k">"taxScheme"</span><span class="p">: {</span> <span class="k">"id"</span><span class="p">:</span> <span class="s">"VAT"</span> <span class="p">} }],</span>
+      <span class="k">"partyLegalEntity"</span><span class="p">: {</span> <span class="k">"registrationName"</span><span class="p">:</span> <span class="s">"Sample Supplier SA"</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="k">"accountingCustomerParty"</span><span class="p">: {</span>
+    <span class="k">"party"</span><span class="p">: {</span>
+      <span class="k">"endpointID"</span><span class="p">: {</span> <span class="k">"schemeID"</span><span class="p">:</span> <span class="s">"0193"</span><span class="p">,</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"BE9872222222"</span> <span class="p">},</span>
+      <span class="k">"partyLegalEntity"</span><span class="p">: {</span> <span class="k">"registrationName"</span><span class="p">:</span> <span class="s">"Sample Buyer NV"</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="k">"taxTotal"</span><span class="p">: [{</span>
+    <span class="k">"taxAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">199.50</span> <span class="p">},</span>
+    <span class="k">"taxSubtotal"</span><span class="p">: [{</span>
+      <span class="k">"taxableAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">950.00</span> <span class="p">},</span>
+      <span class="k">"taxAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">199.50</span> <span class="p">},</span>
+      <span class="k">"taxCategory"</span><span class="p">: {</span> <span class="k">"id"</span><span class="p">:</span> <span class="s">"S"</span><span class="p">,</span> <span class="k">"percent"</span><span class="p">:</span> <span class="n">21.00</span><span class="p">,</span> <span class="k">"taxScheme"</span><span class="p">: {</span> <span class="k">"id"</span><span class="p">:</span> <span class="s">"VAT"</span> <span class="p">} }</span>
+    <span class="p">}]</span>
+  <span class="p">}],</span>
+  <span class="k">"legalMonetaryTotal"</span><span class="p">: {</span>
+    <span class="k">"lineExtensionAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">950.00</span> <span class="p">},</span>
+    <span class="k">"taxExclusiveAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">950.00</span> <span class="p">},</span>
+    <span class="k">"taxInclusiveAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">1149.50</span> <span class="p">},</span>
+    <span class="k">"payableAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">1149.50</span> <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="k">"invoiceLine"</span><span class="p">: [{</span>
+    <span class="k">"id"</span><span class="p">:</span> <span class="s">"1"</span><span class="p">,</span>
+    <span class="k">"invoicedQuantity"</span><span class="p">: {</span> <span class="k">"quantity"</span><span class="p">:</span> <span class="n">5</span><span class="p">,</span> <span class="k">"unitCode"</span><span class="p">:</span> <span class="s">"EA"</span> <span class="p">},</span>
+    <span class="k">"lineExtensionAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">950.00</span> <span class="p">},</span>
+    <span class="k">"item"</span><span class="p">: {</span>
+      <span class="k">"name"</span><span class="p">:</span> <span class="s">"Consulting Services"</span><span class="p">,</span>
+      <span class="k">"classifiedTaxCategory"</span><span class="p">: [{</span> <span class="k">"id"</span><span class="p">:</span> <span class="s">"S"</span><span class="p">,</span> <span class="k">"percent"</span><span class="p">:</span> <span class="n">21.00</span><span class="p">,</span> <span class="k">"taxScheme"</span><span class="p">: {</span> <span class="k">"id"</span><span class="p">:</span> <span class="s">"VAT"</span> <span class="p">} }]</span>
+    <span class="p">},</span>
+    <span class="k">"price"</span><span class="p">: {</span> <span class="k">"priceAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">190.00</span> <span class="p">} }</span>
+  <span class="p">}]</span>
+<span class="p">}</span></pre>
+      </div>
+    </div>
+
+    <!-- BELGIUM FIELD MAPPING -->
+    <div id="page-be-map" class="page">
+      <div class="section-tag">Country Guide — Belgium</div>
+      <h1>Belgium — Field Mapping</h1>
+      <p class="page-intro">Maps ClearTax Unified API JSON field paths to their corresponding UBL 2.1 element names and PINT EU business terms. Use this to cross-reference against the official specification.</p>
+      <h2 class="no-border" style="margin-top:20px">Document Header</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>UBL 2.1 Element</th><th>PINT EU Term</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td><code>cbc:ID</code></td><td>BT-1 Invoice number</td><td>Mandatory. Max 150 chars.</td></tr>
+          <tr><td><code>issueDate</code></td><td><code>cbc:IssueDate</code></td><td>BT-2 Invoice issue date</td><td>YYYY-MM-DD</td></tr>
+          <tr><td><code>invoiceTypeCode.value</code></td><td><code>cbc:InvoiceTypeCode</code></td><td>BT-3 Invoice type code</td><td></td></tr>
+          <tr><td><code>documentCurrencyCode</code></td><td><code>cbc:DocumentCurrencyCode</code></td><td>BT-5 Invoice currency code</td><td>ISO 4217</td></tr>
+          <tr><td><code>taxCurrencyCode</code></td><td><code>cbc:TaxCurrencyCode</code></td><td>BT-6 VAT accounting currency</td><td>Only if differs from BT-5</td></tr>
+          <tr><td><code>buyerReference</code></td><td><code>cbc:BuyerReference</code></td><td>BT-10 Buyer reference</td><td></td></tr>
+          <tr><td><code>invoicePeriod.startDate</code></td><td><code>cbc:StartDate</code></td><td>BT-73 Invoicing period start date</td><td></td></tr>
+          <tr><td><code>invoicePeriod.endDate</code></td><td><code>cbc:EndDate</code></td><td>BT-74 Invoicing period end date</td><td></td></tr>
+          <tr><td><code>orderReference.id</code></td><td><code>cbc:ID</code> (OrderReference)</td><td>BT-13 Purchase order reference</td><td></td></tr>
+          <tr><td><code>billingReference[].invoiceDocumentReference.id</code></td><td><code>cbc:ID</code> (BillingReference)</td><td>BT-25 Preceding invoice reference</td><td>Required for credit/debit notes</td></tr>
+          <tr><td><code>contractDocumentReference.id</code></td><td><code>cbc:ID</code> (ContractDocumentReference)</td><td>BT-12 Contract reference</td><td></td></tr>
+        </tbody>
+      </table></div>
+      <h2>Supplier Party</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>UBL 2.1 Element</th><th>PINT EU Term</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>accountingSupplierParty.party.endpointID.value</code></td><td><code>cbc:EndpointID</code></td><td>BT-34 Seller electronic address</td><td>Peppol routing ID</td></tr>
+          <tr><td><code>accountingSupplierParty.party.endpointID.schemeID</code></td><td><code>@schemeID</code></td><td>BT-34-1 Scheme ID</td><td>e.g. 9925</td></tr>
+          <tr><td><code>accountingSupplierParty.party.partyLegalEntity.registrationName</code></td><td><code>cbc:RegistrationName</code></td><td>BT-27 Seller name</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.partyTaxScheme[].companyID</code></td><td><code>cbc:CompanyID</code></td><td>BT-31 Seller VAT identifier</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.streetName</code></td><td><code>cbc:StreetName</code></td><td>BT-35 Seller address line 1</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.cityName</code></td><td><code>cbc:CityName</code></td><td>BT-37 Seller city</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.postalZone</code></td><td><code>cbc:PostalZone</code></td><td>BT-38 Seller post code</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.country.identificationCode</code></td><td><code>cbc:IdentificationCode</code></td><td>BT-40 Seller country code</td><td>ISO 3166-1 alpha-2</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Buyer Party</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>UBL 2.1 Element</th><th>PINT EU Term</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>accountingCustomerParty.party.endpointID.value</code></td><td><code>cbc:EndpointID</code></td><td>BT-49 Buyer electronic address</td><td>Peppol routing ID</td></tr>
+          <tr><td><code>accountingCustomerParty.party.endpointID.schemeID</code></td><td><code>@schemeID</code></td><td>BT-49-1 Scheme ID</td><td>e.g. 0193</td></tr>
+          <tr><td><code>accountingCustomerParty.party.partyLegalEntity.registrationName</code></td><td><code>cbc:RegistrationName</code></td><td>BT-44 Buyer name</td><td></td></tr>
+          <tr><td><code>accountingCustomerParty.party.partyTaxScheme[].companyID</code></td><td><code>cbc:CompanyID</code></td><td>BT-48 Buyer VAT identifier</td><td></td></tr>
+        </tbody>
+      </table></div>
+      <h2>Tax and Monetary Totals</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>UBL 2.1 Element</th><th>PINT EU Term</th></tr></thead>
+        <tbody>
+          <tr><td><code>taxTotal[].taxAmount.value</code></td><td><code>cbc:TaxAmount</code></td><td>BT-110 Invoice total VAT amount</td></tr>
+          <tr><td><code>taxTotal[].taxSubtotal[].taxableAmount.value</code></td><td><code>cbc:TaxableAmount</code></td><td>BT-116 VAT category taxable amount</td></tr>
+          <tr><td><code>taxTotal[].taxSubtotal[].taxCategory.id</code></td><td><code>cbc:ID</code> (TaxCategory)</td><td>BT-118 VAT category code</td></tr>
+          <tr><td><code>taxTotal[].taxSubtotal[].taxCategory.percent</code></td><td><code>cbc:Percent</code></td><td>BT-119 VAT category rate</td></tr>
+          <tr><td><code>legalMonetaryTotal.lineExtensionAmount.value</code></td><td><code>cbc:LineExtensionAmount</code></td><td>BT-106 Sum of line net amounts</td></tr>
+          <tr><td><code>legalMonetaryTotal.taxExclusiveAmount.value</code></td><td><code>cbc:TaxExclusiveAmount</code></td><td>BT-109 Invoice total without VAT</td></tr>
+          <tr><td><code>legalMonetaryTotal.taxInclusiveAmount.value</code></td><td><code>cbc:TaxInclusiveAmount</code></td><td>BT-112 Invoice total with VAT</td></tr>
+          <tr><td><code>legalMonetaryTotal.payableAmount.value</code></td><td><code>cbc:PayableAmount</code></td><td>BT-115 Amount due for payment</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- MALAYSIA -->
+    <div id="page-my" class="page">
+      <div class="section-tag">Country Guide</div>
+      <h1>Malaysia <span class="ctag ctag-my" style="font-size:14px;padding:3px 10px;vertical-align:middle">MY</span></h1>
+      <p class="page-intro">Malaysia's e-invoicing mandate is administered by LHDN (Inland Revenue Board) through the MyInvois platform. Invoices must be validated and stamped by MyInvois before they are legally valid. ClearTax handles submission and returns the stamped response.</p>
+      <h2 class="no-border" style="margin-top:20px">Submission Flow</h2>
+      <div class="flow">
+        <div class="fstep">Your System</div><div class="farrow">&rarr;</div>
+        <div class="fstep">ClearTax API</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Validation</div><div class="farrow">&rarr;</div>
+        <div class="fstep">LHDN MyInvois</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Stamp and Return</div>
+      </div>
+      <h2>Request Headers</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Header</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><code>x-clear-country-code</code></td><td><code>MY</code></td></tr>
+          <tr><td><code>x-clear-tin</code></td><td>TIN of the Malaysian entity (e.g. <code>C12345678900</code>)</td></tr>
+          <tr><td><code>x-cleartax-auth-token</code></td><td>MY workspace auth token</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-wrap"><div class="code-head"><span class="code-lang">HTTP</span><span class="code-lbl">Sandbox</span></div>
+        <pre><span class="mt">POST</span> <span class="u">https://api-sandbox.my.cleartax.com/einvoice/v1/documents/generate</span></pre>
+      </div>
+      <h2>Invoice Types</h2>
+      <p>See <a onclick="nav('codelists','Code Lists')">Code Lists</a> for Malaysia invoice type codes (01–14).</p>
+      <h2>Malaysia-specific Fields</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>issueTime</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Issue time in HH:mm:ss format. Required by LHDN.</td></tr>
+          <tr><td><code>supplyType</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Type of supply: <code>B2B</code>, <code>B2C</code>, <code>B2G</code>.</td></tr>
+          <tr><td><code>accountingSupplierParty.party.endpointID.schemeID</code></td><td><span class="badge b-enum">Enum</span></td><td><span class="badge b-req">Mandatory</span></td><td><code>TIN</code>, <code>BRN</code>, <code>SST</code>, <code>NRIC</code>, <code>PASSPORT</code>, or <code>ARMY</code></td></tr>
+          <tr><td><code>invoiceLine[].item.commodityClassification[].itemClassificationCode.listID</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Classification scheme: <code>CLASS</code> (MSIC) or <code>PTC</code>.</td></tr>
+          <tr><td><code>invoiceLine[].item.commodityClassification[].itemClassificationCode.value</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Classification code value.</td></tr>
+          <tr><td><code>extensions.my.prepaidPayment[].id</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Prepaid payment reference ID.</td></tr>
+          <tr><td><code>extensions.my.prepaidPayment[].receivedDate</code></td><td><span class="badge b-str">Date</span></td><td><span class="badge b-opt">Optional</span></td><td>Date prepaid payment was received (YYYY-MM-DD).</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Field Mapping</h2>
+      <p>See the <a onclick="nav('my-map','Malaysia — Field Mapping')">Malaysia Field Mapping</a> page for a mapping between ClearTax JSON fields and LHDN MyInvois field names.</p>
+      <h2>Sample Payload</h2>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">eInvoice Object (DocumentData decoded)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="p">{</span>
+  <span class="k">"id"</span><span class="p">:</span> <span class="s">"INV-2025-MY-001"</span><span class="p">,</span>
+  <span class="k">"issueDate"</span><span class="p">:</span> <span class="s">"2025-08-07"</span><span class="p">,</span>
+  <span class="k">"issueTime"</span><span class="p">:</span> <span class="s">"10:30:00"</span><span class="p">,</span>
+  <span class="k">"supplyType"</span><span class="p">:</span> <span class="s">"B2B"</span><span class="p">,</span>
+  <span class="k">"invoiceTypeCode"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"01"</span><span class="p">,</span> <span class="k">"name"</span><span class="p">:</span> <span class="s">"Invoice"</span><span class="p">,</span> <span class="k">"listVersionID"</span><span class="p">:</span> <span class="s">"1.0"</span> <span class="p">},</span>
+  <span class="k">"documentCurrencyCode"</span><span class="p">:</span> <span class="s">"MYR"</span><span class="p">,</span>
+  <span class="k">"accountingSupplierParty"</span><span class="p">: {</span>
+    <span class="k">"party"</span><span class="p">: {</span>
+      <span class="k">"endpointID"</span><span class="p">: {</span> <span class="k">"schemeID"</span><span class="p">:</span> <span class="s">"TIN"</span><span class="p">,</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"C12345678900"</span> <span class="p">},</span>
+      <span class="k">"partyLegalEntity"</span><span class="p">: {</span> <span class="k">"registrationName"</span><span class="p">:</span> <span class="s">"Syarikat ABC Sdn Bhd"</span> <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="k">"invoiceLine"</span><span class="p">: [{</span>
+    <span class="k">"id"</span><span class="p">:</span> <span class="s">"1"</span><span class="p">,</span>
+    <span class="k">"invoicedQuantity"</span><span class="p">: {</span> <span class="k">"quantity"</span><span class="p">:</span> <span class="n">10</span><span class="p">,</span> <span class="k">"unitCode"</span><span class="p">:</span> <span class="s">"EA"</span> <span class="p">},</span>
+    <span class="k">"lineExtensionAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">1000.00</span> <span class="p">},</span>
+    <span class="k">"item"</span><span class="p">: {</span>
+      <span class="k">"name"</span><span class="p">:</span> <span class="s">"Office Supplies"</span><span class="p">,</span>
+      <span class="k">"commodityClassification"</span><span class="p">: [{</span>
+        <span class="k">"itemClassificationCode"</span><span class="p">: {</span> <span class="k">"listID"</span><span class="p">:</span> <span class="s">"CLASS"</span><span class="p">,</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"004"</span> <span class="p">}</span>
+      <span class="p">}]</span>
+    <span class="p">},</span>
+    <span class="k">"price"</span><span class="p">: {</span> <span class="k">"priceAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">100.00</span> <span class="p">} }</span>
+  <span class="p">}]</span>
+<span class="p">}</span></pre>
+      </div>
+    </div>
+
+    <!-- MALAYSIA FIELD MAPPING -->
+    <div id="page-my-map" class="page">
+      <div class="section-tag">Country Guide — Malaysia</div>
+      <h1>Malaysia — Field Mapping</h1>
+      <p class="page-intro">Maps ClearTax Unified API JSON field paths to LHDN MyInvois field names as defined in the MyInvois Data Dictionary.</p>
+      <h2 class="no-border" style="margin-top:20px">Document Header</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>LHDN MyInvois Field</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>e-Invoice Code or Number</td><td>Mandatory</td></tr>
+          <tr><td><code>issueDate</code></td><td>Date of Issue</td><td>YYYY-MM-DD</td></tr>
+          <tr><td><code>issueTime</code></td><td>Time of Issue</td><td>Mandatory for MY. HH:mm:ss</td></tr>
+          <tr><td><code>supplyType</code></td><td>Invoice Type (B2B / B2C / B2G)</td><td>Mandatory</td></tr>
+          <tr><td><code>invoiceTypeCode.value</code></td><td>e-Invoice Type</td><td>01–14</td></tr>
+          <tr><td><code>invoiceTypeCode.name</code></td><td>e-Invoice Type Description</td><td></td></tr>
+          <tr><td><code>invoiceTypeCode.listVersionID</code></td><td>Version</td><td>e.g. "1.0"</td></tr>
+          <tr><td><code>documentCurrencyCode</code></td><td>Currency</td><td>ISO 4217</td></tr>
+          <tr><td><code>billingReference[].invoiceDocumentReference.id</code></td><td>Original e-Invoice Reference Number</td><td>For credit/debit/refund notes</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Supplier Fields</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>LHDN MyInvois Field</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>accountingSupplierParty.party.endpointID.schemeID</code></td><td>Supplier's Identity Type</td><td>TIN, BRN, NRIC, PASSPORT, ARMY, SST</td></tr>
+          <tr><td><code>accountingSupplierParty.party.endpointID.value</code></td><td>Supplier's Identity Value</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.partyLegalEntity.registrationName</code></td><td>Supplier's Name</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.streetName</code></td><td>Supplier's Address Line 1</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.additionalStreetName</code></td><td>Supplier's Address Line 2</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.cityName</code></td><td>Supplier's City</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.postalZone</code></td><td>Supplier's Post Code</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.countrySubentity</code></td><td>Supplier's State</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.country.identificationCode</code></td><td>Supplier's Country</td><td>ISO 3166-1 alpha-2</td></tr>
+          <tr><td><code>accountingSupplierParty.party.contact.telephone</code></td><td>Supplier's Contact Number</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.contact.electronicMail</code></td><td>Supplier's E-mail Address</td><td></td></tr>
+        </tbody>
+      </table></div>
+      <h2>Buyer Fields</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>LHDN MyInvois Field</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>accountingCustomerParty.party.endpointID.schemeID</code></td><td>Buyer's Identity Type</td><td>TIN, BRN, NRIC, PASSPORT, ARMY</td></tr>
+          <tr><td><code>accountingCustomerParty.party.endpointID.value</code></td><td>Buyer's Identity Value</td><td></td></tr>
+          <tr><td><code>accountingCustomerParty.party.partyLegalEntity.registrationName</code></td><td>Buyer's Name</td><td></td></tr>
+          <tr><td><code>accountingCustomerParty.party.postalAddress.country.identificationCode</code></td><td>Buyer's Country</td><td>ISO 3166-1 alpha-2</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Line Item Fields</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>LHDN MyInvois Field</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>invoiceLine[].id</code></td><td>Line ID</td><td></td></tr>
+          <tr><td><code>invoiceLine[].invoicedQuantity.quantity</code></td><td>Quantity</td><td></td></tr>
+          <tr><td><code>invoiceLine[].invoicedQuantity.unitCode</code></td><td>Measurement</td><td>UN/ECE Rec 20</td></tr>
+          <tr><td><code>invoiceLine[].lineExtensionAmount.value</code></td><td>Subtotal</td><td>Net line amount</td></tr>
+          <tr><td><code>invoiceLine[].item.name</code></td><td>Product or Service Description</td><td></td></tr>
+          <tr><td><code>invoiceLine[].item.commodityClassification[].itemClassificationCode.listID</code></td><td>Classification Scheme</td><td>CLASS or PTC</td></tr>
+          <tr><td><code>invoiceLine[].item.commodityClassification[].itemClassificationCode.value</code></td><td>Classification Code</td><td>LHDN MSIC or product code</td></tr>
+          <tr><td><code>invoiceLine[].item.classifiedTaxCategory[].id</code></td><td>Tax Type</td><td></td></tr>
+          <tr><td><code>invoiceLine[].item.classifiedTaxCategory[].percent</code></td><td>Tax Rate (%)</td><td></td></tr>
+          <tr><td><code>invoiceLine[].price.priceAmount.value</code></td><td>Unit Price</td><td></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- UAE -->
+    <div id="page-ae" class="page">
+      <div class="section-tag">Country Guide</div>
+      <h1>UAE <span class="ctag ctag-ae" style="font-size:14px;padding:3px 10px;vertical-align:middle">AE</span></h1>
+      <p class="page-intro">The UAE adopts e-invoicing through the Peppol network using the PINT AE specification. VAT is governed by the Federal Tax Authority (FTA). ClearTax routes UAE invoices through the MEA (Middle East and Africa) regional infrastructure.</p>
+      <div class="callout callout-warn"><strong>AED reporting required.</strong> UAE invoices must include total and line-level amounts in AED in the PINT AE extension fields, even when the invoice is denominated in a foreign currency.</div>
+      <h2>Submission Flow</h2>
+      <div class="flow">
+        <div class="fstep">Your System</div><div class="farrow">&rarr;</div>
+        <div class="fstep">ClearTax API</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Validation</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Peppol Network</div><div class="farrow">&rarr;</div>
+        <div class="fstep">Buyer / FTA</div>
+      </div>
+      <h2>Request Headers</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Header</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><code>x-clear-country-code</code></td><td><code>AE</code></td></tr>
+          <tr><td><code>x-clear-trn</code></td><td>TRN (Tax Registration Number) of the UAE entity</td></tr>
+          <tr><td><code>x-cleartax-auth-token</code></td><td>MEA workspace auth token</td></tr>
+        </tbody>
+      </table></div>
+      <div class="code-wrap"><div class="code-head"><span class="code-lang">HTTP</span><span class="code-lbl">Sandbox</span></div>
+        <pre><span class="mt">POST</span> <span class="u">https://api-sandbox.mea.cleartax.com/einvoice/v1/documents/generate</span></pre>
+      </div>
+      <h2>PINT AE Extensions</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Extension Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><code>extensions.pintAE.uuid</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>UUID for the invoice document.</td></tr>
+          <tr><td><code>extensions.pintAE.accountingSupplierParty.sellerLegalRegistrationIdentifierType</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Seller legal registration identifier type.</td></tr>
+          <tr><td><code>extensions.pintAE.accountingSupplierParty.passportIssuingCountryCode</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>ISO 2-digit country code for the seller's passport-issuing country.</td></tr>
+          <tr><td><code>extensions.pintAE.accountingCustomerParty.beneficiaryID</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Beneficiary ID for the buyer.</td></tr>
+          <tr><td><code>extensions.pintAE.delivery.deliverToPartyID</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Deliver to Party ID.</td></tr>
+          <tr><td><code>extensions.pintAE.delivery.incoterms</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Incoterms code (e.g. CIF, FOB).</td></tr>
+          <tr><td><code>extensions.pintAE.legalMonetaryTotal.invoiceTotalAmountWithTaxInAccCur</code></td><td><span class="badge b-num">Number</span></td><td><span class="badge b-req">Mandatory</span></td><td>Total invoice amount including VAT in AED.</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].vatExemptionReasonCode</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>VAT exemption reason code at line level. Required for exempt lines.</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].invoiceLineAmountInAED</code></td><td><span class="badge b-num">Number</span></td><td><span class="badge b-req">Mandatory</span></td><td>Line net amount in AED.</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].vatLineAmountInAED</code></td><td><span class="badge b-num">Number</span></td><td><span class="badge b-req">Mandatory</span></td><td>Line VAT amount in AED.</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].itemType</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Goods, Services, or Both.</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].typeOfGoodsServices</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Goods or services subject to Reverse Charge Mechanism.</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Field Mapping</h2>
+      <p>See the <a onclick="nav('ae-map','UAE — Field Mapping')">UAE Field Mapping</a> page for a mapping between ClearTax JSON fields and PINT AE business terms.</p>
+      <h2>Sample Payload</h2>
+      <div class="code-wrap">
+        <div class="code-head"><span class="code-lang">JSON</span><span class="code-lbl">eInvoice Object with PINT AE Extensions</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+        <pre><span class="p">{</span>
+  <span class="k">"id"</span><span class="p">:</span> <span class="s">"INV-2025-AE-001"</span><span class="p">,</span>
+  <span class="k">"issueDate"</span><span class="p">:</span> <span class="s">"2025-08-07"</span><span class="p">,</span>
+  <span class="k">"issueTime"</span><span class="p">:</span> <span class="s">"10:30:00"</span><span class="p">,</span>
+  <span class="k">"invoiceTypeCode"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="s">"388"</span> <span class="p">},</span>
+  <span class="k">"documentCurrencyCode"</span><span class="p">:</span> <span class="s">"USD"</span><span class="p">,</span>
+  <span class="k">"taxCurrencyCode"</span><span class="p">:</span> <span class="s">"AED"</span><span class="p">,</span>
+  <span class="k">"legalMonetaryTotal"</span><span class="p">: {</span>
+    <span class="k">"taxInclusiveAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">1050.00</span><span class="p">,</span> <span class="k">"currencyID"</span><span class="p">:</span> <span class="s">"USD"</span> <span class="p">},</span>
+    <span class="k">"payableAmount"</span><span class="p">: {</span> <span class="k">"value"</span><span class="p">:</span> <span class="n">1050.00</span> <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="k">"extensions"</span><span class="p">: {</span>
+    <span class="k">"pintAE"</span><span class="p">: {</span>
+      <span class="k">"uuid"</span><span class="p">:</span> <span class="s">"a1b2c3d4-e5f6-7890-abcd-ef1234567890"</span><span class="p">,</span>
+      <span class="k">"legalMonetaryTotal"</span><span class="p">: {</span>
+        <span class="k">"invoiceTotalAmountWithTaxInAccCur"</span><span class="p">:</span> <span class="n">3856.35</span>
+      <span class="p">},</span>
+      <span class="k">"invoiceLine"</span><span class="p">: [{</span>
+        <span class="k">"lineId"</span><span class="p">:</span> <span class="s">"1"</span><span class="p">,</span>
+        <span class="k">"invoiceLineAmountInAED"</span><span class="p">:</span> <span class="n">3670.00</span><span class="p">,</span>
+        <span class="k">"vatLineAmountInAED"</span><span class="p">:</span> <span class="n">183.50</span><span class="p">,</span>
+        <span class="k">"itemType"</span><span class="p">:</span> <span class="s">"Services"</span>
+      <span class="p">}]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></pre>
+      </div>
+    </div>
+
+    <!-- UAE FIELD MAPPING -->
+    <div id="page-ae-map" class="page">
+      <div class="section-tag">Country Guide — UAE</div>
+      <h1>UAE — Field Mapping</h1>
+      <p class="page-intro">Maps ClearTax Unified API JSON field paths to PINT AE business terms as defined in the Peppol PINT AE specification.</p>
+      <h2 class="no-border" style="margin-top:20px">Document Header</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>PINT AE Term</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>id</code></td><td>BT-1 Invoice number</td><td>Mandatory</td></tr>
+          <tr><td><code>issueDate</code></td><td>BT-2 Invoice issue date</td><td>YYYY-MM-DD</td></tr>
+          <tr><td><code>issueTime</code></td><td>BT-AE-2 Invoice issue time</td><td>HH:mm:ss</td></tr>
+          <tr><td><code>invoiceTypeCode.value</code></td><td>BT-3 Invoice type code</td><td>388, 381, 383</td></tr>
+          <tr><td><code>documentCurrencyCode</code></td><td>BT-5 Invoice currency code</td><td>ISO 4217</td></tr>
+          <tr><td><code>taxCurrencyCode</code></td><td>BT-6 VAT accounting currency</td><td>Typically AED</td></tr>
+          <tr><td><code>taxExchangeRate.calculationRate</code></td><td>BT-AE-7 Exchange rate</td><td>Required if taxCurrencyCode set</td></tr>
+          <tr><td><code>extensions.pintAE.uuid</code></td><td>BT-AE-1 UUID</td><td>Mandatory PINT AE field</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Supplier Fields</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>PINT AE Term</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>accountingSupplierParty.party.partyTaxScheme[].companyID</code></td><td>BT-31 Seller VAT identifier (TRN)</td><td>15-digit TRN</td></tr>
+          <tr><td><code>accountingSupplierParty.party.partyLegalEntity.registrationName</code></td><td>BT-27 Seller name</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.streetName</code></td><td>BT-35 Seller address line 1</td><td></td></tr>
+          <tr><td><code>accountingSupplierParty.party.postalAddress.country.identificationCode</code></td><td>BT-40 Seller country code</td><td>ISO 3166-1 alpha-2</td></tr>
+          <tr><td><code>extensions.pintAE.accountingSupplierParty.sellerLegalRegistrationIdentifierType</code></td><td>BT-AE-31 Seller registration type</td><td>PINT AE extension</td></tr>
+          <tr><td><code>extensions.pintAE.accountingSupplierParty.passportIssuingCountryCode</code></td><td>BT-AE-33 Passport country</td><td>PINT AE extension</td></tr>
+        </tbody>
+      </table></div>
+      <h2>Monetary and Line-level Fields</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>ClearTax JSON Field</th><th>PINT AE Term</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><code>legalMonetaryTotal.taxInclusiveAmount.value</code></td><td>BT-112 Invoice total with VAT</td><td>In invoice currency</td></tr>
+          <tr><td><code>extensions.pintAE.legalMonetaryTotal.invoiceTotalAmountWithTaxInAccCur</code></td><td>BT-AE-112 Invoice total in AED</td><td>Mandatory PINT AE extension</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].invoiceLineAmountInAED</code></td><td>BT-AE-131 Line amount in AED</td><td>Mandatory per line</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].vatLineAmountInAED</code></td><td>BT-AE-132 Line VAT in AED</td><td>Mandatory per line</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].vatExemptionReasonCode</code></td><td>BT-AE-121 VAT exemption reason</td><td>Required for exempt lines</td></tr>
+          <tr><td><code>extensions.pintAE.invoiceLine[].itemType</code></td><td>BT-AE-155 Item type</td><td>Goods / Services / Both</td></tr>
+          <tr><td><code>extensions.pintAE.delivery.incoterms</code></td><td>BT-AE-Incoterms</td><td>PINT AE extension</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function nav(page, label) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.getElementById('bc').textContent = label;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1800);
+  });
+}
+</script>
+</body>
+</html>
