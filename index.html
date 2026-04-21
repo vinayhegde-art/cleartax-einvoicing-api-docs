@@ -137,6 +137,20 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 .placeholder-box { border: 2px dashed #d1d5db; border-radius: 8px; padding: 32px; text-align: center; margin: 20px 0; background: #fafafa; }
 .placeholder-box strong { color: #6b7280; display: block; font-size: 14px; margin-bottom: 6px; }
 .placeholder-box p { color: #9ca3af; font-size: 13.5px; margin: 0; }
+
+/* Schema table styles */
+.nav-item.sub2 { padding-left: 40px; font-size: 11.5px; color: #64748b; }
+.nav-item.sub2:hover { color: #cbd5e1; }
+.nav-item.sub2.active { color: #7dd3fc; border-left-color: #7dd3fc; background: rgba(56,189,248,0.06); }
+td.path { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11.5px; color: #0f766e; background: #f0fdfa; font-weight: 500; white-space: nowrap; }
+td.desc { color: #475569; font-size: 12.5px; line-height: 1.5; }
+td.example { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11.5px; color: #6d28d9; background: #faf5ff; }
+.badge-req { background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; font-family: 'SF Mono', monospace; }
+.badge-opt { background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 4px; font-family: 'SF Mono', monospace; }
+.type-pill { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-family: 'SF Mono', monospace; background: #e0f2fe; color: #0369a1; }
+.type-group { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-family: 'SF Mono', monospace; background: #dcfce7; color: #166534; }
+.group-row td { background: #fafaf9 !important; }
+.group-row td.path { background: #f0fdf4 !important; color: #16a34a; }
 </style>
 </head>
 <body>
@@ -166,6 +180,19 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <a class="nav-item sub" data-page="send" data-anchor="h-send-headers" onclick="nav('send','Send e-Invoice','h-send-headers')">Request Headers</a>
     <a class="nav-item sub" data-page="send" data-anchor="h-send-body" onclick="nav('send','Send e-Invoice','h-send-body')">Request Body</a>
     <a class="nav-item sub" data-page="send" data-anchor="h-send-schema" onclick="nav('send','Send e-Invoice','h-send-schema')">Request Schema</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-header" onclick="nav('send','Send e-Invoice','h-schema-header')">Invoice Header Fields</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-period" onclick="nav('send','Send e-Invoice','h-schema-period')">Invoice Period</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-billing" onclick="nav('send','Send e-Invoice','h-schema-billing')">Billing Reference</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-docrefs" onclick="nav('send','Send e-Invoice','h-schema-docrefs')">Document References</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-supplier" onclick="nav('send','Send e-Invoice','h-schema-supplier')">Supplier (Accountingsupplierparty)</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-buyer" onclick="nav('send','Send e-Invoice','h-schema-buyer')">Buyer (Accountingcustomerparty)</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-delivery" onclick="nav('send','Send e-Invoice','h-schema-delivery')">Delivery</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-payment-means" onclick="nav('send','Send e-Invoice','h-schema-payment-means')">Payment Means</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-payment-terms" onclick="nav('send','Send e-Invoice','h-schema-payment-terms')">Payment Terms</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-allowances" onclick="nav('send','Send e-Invoice','h-schema-allowances')">Document-Level Allowances And Charges</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-tax" onclick="nav('send','Send e-Invoice','h-schema-tax')">Tax Total</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-monetary" onclick="nav('send','Send e-Invoice','h-schema-monetary')">Legal Monetary Total</a>
+    <a class="nav-item sub2" data-page="send" data-anchor="h-schema-line" onclick="nav('send','Send e-Invoice','h-schema-line')">Invoice Line</a>
     <a class="nav-item sub" data-page="send" data-anchor="h-send-sample" onclick="nav('send','Send e-Invoice','h-send-sample')">Sample Request</a>
     <a class="nav-item sub" data-page="send" data-anchor="h-send-response" onclick="nav('send','Send e-Invoice','h-send-response')">Response Schema</a>
     <a class="nav-item sub" data-page="codelists" onclick="nav('codelists','Code Lists')">Code Lists</a>
@@ -346,9 +373,1217 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       </table></div>
 
       <h2 id="h-send-schema">Request Schema</h2>
-      <div class="placeholder-box">
-        <strong>Request Schema — Placeholder</strong>
-        <p>The base JSON schema covering fields common across all countries will be documented here.</p>
+      <p style="color:#475569;font-size:14px;line-height:1.7;margin-bottom:24px;">
+        The ClearTax Unified API accepts a single JSON payload that covers all supported countries.
+        The schema is organised into <strong>13 parent objects</strong>; each contains child fields documented below.
+        Fields marked <span class="badge badge-req">1..1</span> or <span class="badge badge-req">1..n</span> are mandatory;
+        <span class="badge badge-opt">0..1</span> or <span class="badge badge-opt">0..n</span> are optional.
+      </p>
+
+      <h3 id="h-schema-header" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Invoice Header Fields</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Top-level fields that identify and classify the invoice — its unique ID, dates, type, and currency settings.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="path">id</td>
+              <td>Invoice number</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-1</code></td>
+              <td class="desc">A unique identification of the Invoice. The sequential number required in Article 226(2) of the directive 2006/112/EC, to uniquely identify the Invoice within the business context, time-frame, operating systems and records of the Seller. No identification scheme is to be used.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">33445566</td>
+            </tr>
+            <tr>
+              <td class="path">issueDate</td>
+              <td>Invoice issue date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-2</code></td>
+              <td class="desc">The date when the Invoice was issued. Format 'YYYY-MM-DD'.</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">2017-11-01</td>
+            </tr>
+            <tr>
+              <td class="path">issueTime</td>
+              <td>Invoice issue time</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">IBT-168</code></td>
+              <td class="desc">The time when the Invoice was issued. Format 'HH:MM:SS'.</td>
+              <td><span class="type-pill">Time</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">07:54:00</td>
+            </tr>
+            <tr>
+              <td class="path">paymentDueDate</td>
+              <td>Payment due date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-9</code></td>
+              <td class="desc">The date when the payment is due. Format 'YYYY-MM-DD'. When the amount due for payment (BT-115) is positive, either the payment due date (BT-9) or the payment terms (BT-20) shall be present.</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">2017-11-01</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceTypeCode.value</td>
+              <td>Invoice type code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-3</code></td>
+              <td class="desc">A code specifying the functional type of the Invoice. Invoices types which can include payment in cash should be chosen from the UNCL1001 subset list. The code 380 represents a commercial invoice.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">380</td>
+            </tr>
+            <tr>
+              <td class="path">documentCurrencyCode</td>
+              <td>Invoice currency code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-5</code></td>
+              <td class="desc">The currency in which all Invoice amounts are given, except for the Total VAT amount in accounting currency. Only one currency shall be used in the Invoice, except for the VAT accounting currency code (BT-6) and the invoice total VAT amount in accounting currency (BT-111). Must conform to ISO 4217 a</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">EUR</td>
+            </tr>
+            <tr>
+              <td class="path">taxCurrencyCode</td>
+              <td>Tax currency code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-6</code></td>
+              <td class="desc">The currency used for VAT accounting and reporting purposes as accepted or required in the country of the Seller. Shall be used in combination with the invoice total VAT amount in accounting currency (BT-111), when the VAT accounting currency code differs from the invoice currency code. Must conform</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">SEK</td>
+            </tr>
+            <tr>
+              <td class="path">note</td>
+              <td>Invoice note</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-22</code></td>
+              <td class="desc">A textual note that gives unstructured information that is relevant to the Invoice as a whole. Such as the reason for any correction made to the invoice or other relevant information.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Please note our new phone number 33 44 55 66</td>
+            </tr>
+            <tr>
+              <td class="path">taxPointDate</td>
+              <td>Tax/VAT point date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-7</code></td>
+              <td class="desc">The date when the VAT becomes accountable for the Seller and for the Buyer in case the date differs from the invoice date. This element is mutually exclusive with the Value Added Tax Point Date Code (BT-8).</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">2017-11-01</td>
+            </tr>
+            <tr>
+              <td class="path">buyerReference</td>
+              <td>Buyer reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-10</code></td>
+              <td class="desc">An identifier assigned by the Buyer used for internal routing purposes. An invoice shall have either a buyer reference or a purchase order reference (BT-13).</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">abs1234</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCost</td>
+              <td>Buyer accounting reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-19</code></td>
+              <td class="desc">A textual value that specifies where to book the relevant data into the Buyer's financial accounts.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">4217:2323:2323</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-period" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Invoice Period</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">An optional group defining the billing period covered by this invoice — the date range during which goods or services were delivered.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">invoicePeriod</td>
+              <td>Invoice period (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A group of business terms providing information on the invoice period.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">invoicePeriod.startDate</td>
+              <td>Invoicing period start date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-73</code></td>
+              <td class="desc">The date when the invoice period starts. Format 'YYYY-MM-DD'.</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">2017-12-01</td>
+            </tr>
+            <tr>
+              <td class="path">invoicePeriod.endDate</td>
+              <td>Invoicing period end date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-74</code></td>
+              <td class="desc">The date when the invoice period ends. Format 'YYYY-MM-DD'.</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">2017-12-31</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-billing" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Billing Reference</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">References to a preceding invoice, used when issuing corrections, credit notes, or follow-up invoices.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">billingReference</td>
+              <td>Billing reference (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A group identifying the billing.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..n</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">billingReference[].id</td>
+              <td>Preceding invoice reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-25</code></td>
+              <td class="desc">The identification of an Invoice that was previously sent by the Seller.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">billingReference[].issueDate</td>
+              <td>Preceding invoice issue date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-26</code></td>
+              <td class="desc">The date when the Preceding Invoice was issued. Shall be provided in case the Preceding Invoice identifier is not unique.</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">2017-12-01</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-docrefs" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Document References</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Cross-references to related documents such as purchase orders, contracts, projects, and supporting attachments.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="path">orderReference.id</td>
+              <td>Purchase order reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-13</code></td>
+              <td class="desc">An identifier of a referenced purchase order, issued by the Buyer.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">98756</td>
+            </tr>
+            <tr>
+              <td class="path">orderReference.salesOrderId</td>
+              <td>Sales order reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-14</code></td>
+              <td class="desc">An identifier of a referenced sales order, issued by the Seller.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">123456</td>
+            </tr>
+            <tr class="group-row">
+              <td class="path">contractDocumentReference</td>
+              <td>Contract reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A reference document identifying a contract.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr class="group-row">
+              <td class="path">projectReference</td>
+              <td>Project reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A reference document identifying a project.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr class="group-row">
+              <td class="path">additionalDocumentReference[]</td>
+              <td>Additional document reference</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A reference document providing supporting information.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..n</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">additionalDocumentReference[].id</td>
+              <td>Additional document reference ID</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-18, BT-122</code></td>
+              <td class="desc">An identifier for an object on which the invoice is based, given by the Seller, or the identifier for the supporting document.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">DR35141</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-supplier" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Supplier (Accountingsupplierparty)</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Legal and contact details for the party issuing the invoice (the Seller/Supplier).</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">accountingSupplierParty</td>
+              <td>Seller/Supplier (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Information about the Seller.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.partyLegalEntity.registrationName</td>
+              <td>Seller/Supplier legal name</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-27</code></td>
+              <td class="desc">The full formal name by which the Seller is registered in the national registry of legal entities or as a Taxable person or otherwise trades.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">SupplierOfficialName Ltd</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.partyName.name</td>
+              <td>Seller/Supplier trade name</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-28</code></td>
+              <td class="desc">A name by which the Seller is known, other than Seller name (also known as Business name).</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">SupplierTradingName Ltd.</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.partyIdentification[].id.value</td>
+              <td>Seller/Supplier identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-29, BT-90</code></td>
+              <td class="desc">Used for both the identification of the Seller, or the unique banking reference identifier of Seller (assigned by the Seller bank.)</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">99887766</td>
+            </tr>
+            <tr>
+              <td class="path">companyID</td>
+              <td>Seller/Supplier VAT identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-31, BT-32</code></td>
+              <td class="desc">The Sellers VAT identifier (also known as Seller VAT identification number) or the local identification (defined by the Sellers address) of the Seller for tax purposes or a reference that enables the Seller to state his registered tax status.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">GB1232434</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.partyTaxScheme.companyID</td>
+              <td>Seller/Supplier legal reg. no.</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-30</code></td>
+              <td class="desc">An identifier issued by an official registrar that identifies the Seller as a legal entity or person.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">GB983294</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.contact.telephone</td>
+              <td>Seller/Supplier contact telephone</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-42</code></td>
+              <td class="desc">A phone number for the contact point.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">9384203984</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.contact.electronicMail</td>
+              <td>Seller/Supplier contact email</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-43</code></td>
+              <td class="desc">An e-mail address for the contact point.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">john.doe@foo.bar</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.postalAddress.addressLine[].line</td>
+              <td>Seller/Supplier address line</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-35</code></td>
+              <td class="desc">The main address line in an address.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Main street 1</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.postalAddress.cityName</td>
+              <td>Seller/Supplier city</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-37</code></td>
+              <td class="desc">The common name of the city, town or village, where the Seller address is located.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">London</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.postalAddress.postalZone</td>
+              <td>Seller/Supplier postal code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-38</code></td>
+              <td class="desc">The identifier for an addressable group of properties according to the relevant postal service.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">GB 123 EW</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.postalAddress.countrySubentityCode</td>
+              <td>Seller/Supplier country subdivision</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-39</code></td>
+              <td class="desc">The subdivision of a country.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Södermalm</td>
+            </tr>
+            <tr>
+              <td class="path">accountingSupplierParty.party.postalAddress.country.identificationCode.countryCode</td>
+              <td>Seller/Supplier country code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-40</code></td>
+              <td class="desc">A code that identifies the country.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">GB</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-buyer" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Buyer (Accountingcustomerparty)</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Legal and contact details for the party receiving the invoice (the Buyer/Customer).</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">accountingCustomerParty</td>
+              <td>Buyer (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Information about the Buyer.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.partyLegalEntity.registrationName</td>
+              <td>Buyer legal name</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-44</code></td>
+              <td class="desc">The full name of the Buyer as required in Peppol BIS Billing specifications.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">Buyer Full Name AS</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.partyIdentification[].id.value</td>
+              <td>Buyer identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-46</code></td>
+              <td class="desc">An identifier of the Buyer.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">FR23342</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.partyTaxScheme.companyID</td>
+              <td>Buyer VAT identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-48</code></td>
+              <td class="desc">The Buyers VAT identifier (also known as Buyer VAT identification number).</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">SE4598375937</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.contact.telephone</td>
+              <td>Buyer contact telephone</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">IBT-057</code></td>
+              <td class="desc">The telephone number of the Buyer contact point.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Telephone number</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.contact.electronicMail</td>
+              <td>Buyer contact email</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">IBT-058</code></td>
+              <td class="desc">The email address of the Buyer contact point.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Email address</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.postalAddress.addressLine[].line</td>
+              <td>Buyer address line</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-50</code></td>
+              <td class="desc">The main address line in an address.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Huvudgatan 32</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.postalAddress.cityName</td>
+              <td>Buyer city</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-52</code></td>
+              <td class="desc">The common name of the city, town or village, where the Buyers address is located.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Stockholm</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.postalAddress.postalZone</td>
+              <td>Buyer postal code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-53</code></td>
+              <td class="desc">The identifier for an addressable group of properties according to the relevant postal service.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">456 34</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.postalAddress.countrySubentityCode</td>
+              <td>Buyer country subdivision</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-54</code></td>
+              <td class="desc">The subdivision of a country.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">accountingCustomerParty.party.postalAddress.country.identificationCode.countryCode</td>
+              <td>Buyer country code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-55</code></td>
+              <td class="desc">A code that identifies the country.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">SE</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-delivery" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Delivery</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Information about where and when the goods or services were delivered.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">delivery</td>
+              <td>Delivery (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Information about the delivery.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">delivery.deliveryParty.partyLegalEntity.registrationName</td>
+              <td>Delivery party name</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-70</code></td>
+              <td class="desc">The name of the party to which the goods and services are delivered.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">Delivery party Name</td>
+            </tr>
+            <tr class="group-row">
+              <td class="path">delivery.deliveryLocation</td>
+              <td>Delivery location</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Address information for the delivery location.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">delivery.deliveryParty.postalAddress.addressLine[].line</td>
+              <td>Delivery address line</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-75</code></td>
+              <td class="desc">The main address line in an address.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Delivery street 2</td>
+            </tr>
+            <tr>
+              <td class="path">delivery.deliveryParty.postalAddress.cityName</td>
+              <td>Delivery city</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-77</code></td>
+              <td class="desc">The common name of the city, town or village, where the deliver to address is located.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Stockholm</td>
+            </tr>
+            <tr>
+              <td class="path">delivery.deliveryParty.postalAddress.postalZone</td>
+              <td>Delivery postal code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-78</code></td>
+              <td class="desc">The identifier for an addressable group of properties according to the relevant postal service.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">21234</td>
+            </tr>
+            <tr>
+              <td class="path">delivery.deliveryParty.postalAddress.countrySubentityCode</td>
+              <td>Delivery country subdivision</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-79</code></td>
+              <td class="desc">The subdivision of a country.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">delivery.deliveryParty.postalAddress.country.identificationCode.countryCode</td>
+              <td>Delivery country code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-80</code></td>
+              <td class="desc">A code that identifies the country.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">SE</td>
+            </tr>
+            <tr>
+              <td class="path">actualDeliveryDate</td>
+              <td>Actual delivery date</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-72</code></td>
+              <td class="desc">The date on which the supply of goods or services was made or completed.</td>
+              <td><span class="type-pill">Date</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">2017-11-01</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-payment-means" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Payment Means</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Details about how payment is expected to be made — bank transfer, card, or other means.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">paymentMeans</td>
+              <td>Payment means (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Information about payment methods.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..n</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">paymentMeans.paymentMeansCode</td>
+              <td>Payment means type code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-81</code></td>
+              <td class="desc">The means, expressed as code, for how a payment is expected to be or has been settled.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">30</td>
+            </tr>
+            <tr>
+              <td class="path">paymentMeans[].payeeFinancialAccount.id</td>
+              <td>Payment account identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-85</code></td>
+              <td class="desc">The name of the payment account, at a payment service provider, to which payment should be made.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">AccountName</td>
+            </tr>
+            <tr>
+              <td class="path">paymentMeans[].cardAccount.primaryAccountNumberID</td>
+              <td>Card account number</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-87</code></td>
+              <td class="desc">The Primary Account Number (PAN) of the card used for payment. Per security standards, invoices must never include a full card primary account number.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">paymentMeans[].cardAccount.networkID</td>
+              <td>Card network</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Card network identifier.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">paymentMeans[].cardAccount.holderName</td>
+              <td>Card holder name</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-88</code></td>
+              <td class="desc">The name of the payment card holder.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-payment-terms" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Payment Terms</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Textual description of the payment conditions that apply to this invoice.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td class="path">paymentTerms.note</td>
+              <td>Payment terms note</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-20</code></td>
+              <td class="desc">A textual description of the payment terms that apply to the amount due for payment (Including description of possible penalties).</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">Payment within 10 days, 2% discount</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-allowances" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Document-Level Allowances And Charges</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Allowances (discounts) or charges applied at the overall invoice level, not tied to a specific line item.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">allowanceCharge</td>
+              <td>Allowance/charge (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Information about document level allowances and charges.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..n</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">allowanceCharge[].chargeIndicator</td>
+              <td>Charge indicator</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-136</code></td>
+              <td class="desc">Specifies whether a line item adjustment represents a charge or allowance. It uses a boolean value: 'true' for Charges and 'false' for Allowances.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">false</td>
+            </tr>
+            <tr>
+              <td class="path">allowanceCharge[].allowanceChargeReasonCode</td>
+              <td>Allowance/charge reason code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-140</code></td>
+              <td class="desc">The reason for the line level allowance or charge, expressed as a code.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">95</td>
+            </tr>
+            <tr>
+              <td class="path">allowanceCharge[].allowanceChargeReason</td>
+              <td>Allowance/charge reason</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-141</code></td>
+              <td class="desc">The reason for the line level allowance or charge, expressed as text.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Discount</td>
+            </tr>
+            <tr>
+              <td class="path">allowanceCharge[].multiplierFactorNumeric</td>
+              <td>Allowance/charge percentage</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-139</code></td>
+              <td class="desc">The percentage that may be used, in conjunction with the line level allowance base amount, to calculate the line level allowance or charge amount.</td>
+              <td><span class="type-pill">Percentage</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">1</td>
+            </tr>
+            <tr>
+              <td class="path">allowanceCharge[].amount.value</td>
+              <td>Allowance/charge amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-137</code></td>
+              <td class="desc">The amount of an allowance or a charge, without VAT. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">101</td>
+            </tr>
+            <tr>
+              <td class="path">allowanceCharge[].baseAmount.value</td>
+              <td>Allowance/charge base amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-138</code></td>
+              <td class="desc">The base amount that may be used, in conjunction with the line level allowance or charge percentage, to calculate the line level allowance or charge amount. This value must be rounded to a maximum of 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-tax" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Tax Total</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Aggregated tax amounts broken down by VAT category code and rate.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">taxTotal</td>
+              <td>Tax total (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Tax totals and breakdown by VAT category.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-req">1..2</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">taxTotal[].taxAmount.value</td>
+              <td>Total tax amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-110, BT-111</code></td>
+              <td class="desc">The total VAT amount for the Invoice or the VAT total amount expressed in the accounting currency accepted or required in the country of the Seller. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">331.25</td>
+            </tr>
+            <tr>
+              <td class="path">taxTotal[].taxSubtotal[].taxableAmount.value</td>
+              <td>Tax subtotal taxable amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-116</code></td>
+              <td class="desc">Sum of all taxable amounts subject to a specific VAT category code and VAT category rate (if the VAT category rate is applicable). Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">1325</td>
+            </tr>
+            <tr>
+              <td class="path">taxTotal[].taxSubtotal[].taxAmount.value</td>
+              <td>Tax subtotal tax amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-117</code></td>
+              <td class="desc">The total VAT amount for a given VAT category. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">taxTotal[].taxSubtotal[].taxCategory.id</td>
+              <td>Tax category code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-118</code></td>
+              <td class="desc">Coded identification of a VAT category.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">S</td>
+            </tr>
+            <tr>
+              <td class="path">taxTotal[].taxSubtotal[].percent</td>
+              <td>Tax rate</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-119</code></td>
+              <td class="desc">The VAT rate, represented as percentage that applies for the relevant VAT category.</td>
+              <td><span class="type-pill">Percentage</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">25.0</td>
+            </tr>
+            <tr>
+              <td class="path">taxTotal[].taxSubtotal[].taxCategory.taxExemptionReason</td>
+              <td>Tax exemption reason</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-120</code></td>
+              <td class="desc">A textual statement of the reason why the amount is exempted from VAT or why no VAT is being charged.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-monetary" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Legal Monetary Total</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">The financial summary of the invoice — all monetary totals including net, gross, tax, and amount due.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">legalMonetaryTotal</td>
+              <td>Invoice totals (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">Document level financial totals.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.lineExtensionAmount.value</td>
+              <td>Sum of line net amounts</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-106</code></td>
+              <td class="desc">Sum of all Invoice line net amounts in the Invoice. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">1300</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.taxExclusiveAmount.value</td>
+              <td>Invoice total without tax</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-109</code></td>
+              <td class="desc">The total amount of the Invoice without VAT. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">1325</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.taxInclusiveAmount.value</td>
+              <td>Invoice total with tax</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-112</code></td>
+              <td class="desc">The total amount of the Invoice with VAT. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">1656.25</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.allowanceTotalAmount.value</td>
+              <td>Sum of document allowances</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-107</code></td>
+              <td class="desc">Sum of all allowances on document level in the Invoice. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">100</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.chargeTotalAmount.value</td>
+              <td>Sum of document charges</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-108</code></td>
+              <td class="desc">Sum of all charges on document level in the Invoice. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">25</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.prepaidAmount.value</td>
+              <td>Prepaid amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-113</code></td>
+              <td class="desc">The sum of amounts which have been paid in advance. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.payableRoundingAmount.value</td>
+              <td>Rounding amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-114</code></td>
+              <td class="desc">The amount to be added to the invoice total to round the amount to be paid. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">legalMonetaryTotal.payableAmount.value</td>
+              <td>Amount due for payment</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-115</code></td>
+              <td class="desc">The outstanding amount that is requested to be paid. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">1656.25</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="h-schema-line" style="font-size:16px;font-weight:700;color:#1e293b;margin:36px 0 8px;padding-top:4px;">Invoice Line</h3>
+      <p style="color:#64748b;font-size:13.5px;line-height:1.6;margin-bottom:14px;">Individual line items on the invoice — each describing a product or service, its quantity, price, and tax.</p>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th>Path</th>
+            <th>Business Term</th>
+            <th>BT Reference</th>
+            <th>Description</th>
+            <th>Data Type</th>
+            <th>Cardinality</th>
+            <th>Example Value</th>
+          </tr></thead>
+          <tbody>
+            <tr class="group-row">
+              <td class="path">invoiceLine</td>
+              <td>Invoice line (group)</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A group of business terms providing information about individual invoice lines.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-req">1..n</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].id</td>
+              <td>Invoice line identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-126</code></td>
+              <td class="desc">A unique identifier for the individual line within the Invoice.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">12</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].note</td>
+              <td>Invoice line note</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-127</code></td>
+              <td class="desc">Unstructured information that is relevant to the Invoice line.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">New article number 12345</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].invoicedQuantity.quantity</td>
+              <td>Invoiced quantity</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-129</code></td>
+              <td class="desc">The quantity of items (goods or services) that is charged in the Invoice line.</td>
+              <td><span class="type-pill">Quantity</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">7</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].invoicedQuantity.unitCode</td>
+              <td>Unit of measure</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">IBT-129</code></td>
+              <td class="desc">The quantity of goods or services invoiced.</td>
+              <td><span class="type-pill">Quantity</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">2000</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].lineExtensionAmount.value</td>
+              <td>Invoice line net amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-131</code></td>
+              <td class="desc">The total amount of the Invoice line. The amount is 'net' without VAT, i.e. inclusive of line level allowances and charges as well as other relevant taxes. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">2800</td>
+            </tr>
+            <tr class="group-row">
+              <td class="path">invoiceLine[].allowanceCharge</td>
+              <td>Line-level allowance/charge</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A group of business terms providing information about allowances and charges at line level.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-opt">0..n</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].allowanceCharge[].chargeIndicator</td>
+              <td>Line charge indicator</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-136</code></td>
+              <td class="desc">Specifies whether a line item adjustment represents a charge or allowance. It uses a boolean value: 'true' for Charges and 'false' for Allowances.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">false</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].allowanceCharge[].allowanceChargeReason</td>
+              <td>Line allowance/charge reason</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-141</code></td>
+              <td class="desc">The reason for the line level allowance or charge, expressed as text.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Discount</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].allowanceCharge[].amount.value</td>
+              <td>Line allowance/charge amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-137</code></td>
+              <td class="desc">The amount of an allowance or a charge, without VAT. Must be rounded to maximum 2 decimals.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">101</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].item.description</td>
+              <td>Item description</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-154</code></td>
+              <td class="desc">A description for an item. The item description allows for describing the item and its features in more detail than the Item name.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">Description of item</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].item.name</td>
+              <td>Item name</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-153</code></td>
+              <td class="desc">A name for an item. This field captures the product or service designation within an invoice line.</td>
+              <td><span class="type-pill">Text</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">item name</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].item.buyersItemIdentification.id</td>
+              <td>Buyer item identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-156</code></td>
+              <td class="desc">An identifier, assigned by the Buyer, for the item.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">buyer-item-001</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].item.sellersItemIdentification.id</td>
+              <td>Seller item identifier</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-155</code></td>
+              <td class="desc">An identifier, assigned by the Seller, for the item.</td>
+              <td><span class="type-pill">Identifier</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">97iugug876</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].item.commodityClassification[].itemClassificationCode.value</td>
+              <td>Item classification code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-158</code></td>
+              <td class="desc">A code for classifying the item by its type or nature.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">09348023</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].item.originCountry.identificationCode.countryCode</td>
+              <td>Item origin country</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-159</code></td>
+              <td class="desc">The code identifying the country from which the item originates.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">NO</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].taxTotal.taxSubtotal[].taxCategory.id</td>
+              <td>Line VAT/tax category code</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-151</code></td>
+              <td class="desc">The VAT category code for the invoiced item.</td>
+              <td><span class="type-pill">Code</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">S</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].taxTotal.taxSubtotal[].percent</td>
+              <td>Line VAT/tax rate</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-152</code></td>
+              <td class="desc">The VAT rate, represented as percentage that applies to the invoiced item.</td>
+              <td><span class="type-pill">Percentage</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">25.0</td>
+            </tr>
+            <tr class="group-row">
+              <td class="path">invoiceLine[].taxTotal.taxAmount.value</td>
+              <td>Line tax amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">—</code></td>
+              <td class="desc">A group of business terms providing information about the line VAT.</td>
+              <td><span class="type-group">Group</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">—</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].price.priceAmount.value</td>
+              <td>Item net price</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-146</code></td>
+              <td class="desc">The price of an item, exclusive of VAT, after subtracting item price discount.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">400</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].price.baseQuantity.value</td>
+              <td>Item price base quantity</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BT-149</code></td>
+              <td class="desc">The number of item units to which the price applies.</td>
+              <td><span class="type-pill">Quantity</span></td>
+              <td><span class="badge badge-opt">0..1</span></td>
+              <td class="example">1</td>
+            </tr>
+            <tr>
+              <td class="path">invoiceLine[].itemPriceExtension.amount.value</td>
+              <td>Item price extension amount</td>
+              <td><code style="font-size:11px;background:#f1f5f9;padding:1px 5px;border-radius:3px;color:#475569;">BTAE-10</code></td>
+              <td class="desc">The total gross price extension amount for the invoice line including VAT.</td>
+              <td><span class="type-pill">Amount</span></td>
+              <td><span class="badge badge-req">1..1</span></td>
+              <td class="example">11010.3</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <h2 id="h-send-sample">Sample Request</h2>
@@ -1078,7 +2313,7 @@ function _setActiveNav(page, anchor) {
 function _setupScrollTracking(page) {
   const pageEl = document.getElementById('page-' + page);
   if (!pageEl) return;
-  const headings = Array.from(pageEl.querySelectorAll('h2[id]'));
+  const headings = Array.from(pageEl.querySelectorAll('h2[id], h3[id]'));
   if (!headings.length) return;
 
   function onScroll() {
