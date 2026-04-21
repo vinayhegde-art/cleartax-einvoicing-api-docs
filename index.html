@@ -154,8 +154,10 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <div class="sidebar-section-label">Overview</div>
     <a class="nav-item active" data-page="overview" onclick="nav('overview','Introduction')">Introduction</a>
     <a class="nav-item sub" data-page="overview" data-anchor="h-how-to-use" onclick="nav('overview','Introduction','h-how-to-use')">How to Use the API</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-live-countries" onclick="nav('overview','Introduction','h-live-countries')">Live Countries</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-apis-structure" onclick="nav('overview','Introduction','h-apis-structure')">APIs and Structure</a>
     <a class="nav-item sub" data-page="overview" data-anchor="h-authentication" onclick="nav('overview','Introduction','h-authentication')">Authentication</a>
-    <a class="nav-item sub" data-page="overview" data-anchor="h-base-urls" onclick="nav('overview','Introduction','h-base-urls')">Base URLs</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-environments" onclick="nav('overview','Introduction','h-environments')">Environments</a>
   </div>
 
   <div class="sidebar-section">
@@ -177,24 +179,24 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">Country Guides</div>
-    <a class="nav-item" data-page="be" onclick="nav('be','Belgium')">Belgium <span class="ctag ctag-be">BE</span></a>
-    <a class="nav-item sub" data-page="be" onclick="nav('be','Belgium')">Country Overview</a>
-    <a class="nav-item sub" data-page="be" data-anchor="h-be-invoice-types" onclick="nav('be','Belgium','h-be-invoice-types')">Invoice Types</a>
-    <a class="nav-item sub" data-page="be" data-anchor="h-be-extensions" onclick="nav('be','Belgium','h-be-extensions')">Extensions</a>
-    <a class="nav-item sub" data-page="be-map" onclick="nav('be-map','Belgium — Field Mapping')">Field Mapping</a>
-    <a class="nav-item sub" data-page="be" data-anchor="h-be-sample" onclick="nav('be','Belgium','h-be-sample')">Sample Payload</a>
-    <a class="nav-item" data-page="my" onclick="nav('my','Malaysia')">Malaysia <span class="ctag ctag-my">MY</span></a>
-    <a class="nav-item sub" data-page="my" onclick="nav('my','Malaysia')">Country Overview</a>
-    <a class="nav-item sub" data-page="my" data-anchor="h-my-invoice-types" onclick="nav('my','Malaysia','h-my-invoice-types')">Invoice Types</a>
-    <a class="nav-item sub" data-page="my" data-anchor="h-my-extensions" onclick="nav('my','Malaysia','h-my-extensions')">Extensions</a>
-    <a class="nav-item sub" data-page="my-map" onclick="nav('my-map','Malaysia — Field Mapping')">Field Mapping</a>
-    <a class="nav-item sub" data-page="my" data-anchor="h-my-sample" onclick="nav('my','Malaysia','h-my-sample')">Sample Payload</a>
-    <a class="nav-item" data-page="ae" onclick="nav('ae','UAE')">UAE <span class="ctag ctag-ae">AE</span></a>
-    <a class="nav-item sub" data-page="ae" onclick="nav('ae','UAE')">Country Overview</a>
-    <a class="nav-item sub" data-page="ae" onclick="nav('ae','UAE')">Invoice Types</a>
-    <a class="nav-item sub" data-page="ae" data-anchor="h-ae-extensions" onclick="nav('ae','UAE','h-ae-extensions')">PINT AE Extensions</a>
-    <a class="nav-item sub" data-page="ae-map" onclick="nav('ae-map','UAE — Field Mapping')">Field Mapping</a>
-    <a class="nav-item sub" data-page="ae" data-anchor="h-ae-sample" onclick="nav('ae','UAE','h-ae-sample')">Sample Payload</a>
+    <a class="nav-item" data-page="be" onclick="nav('be','🇧🇪 Belgium')">🇧🇪 Belgium <span class="ctag ctag-be">BE</span></a>
+    <a class="nav-item sub" data-page="be" onclick="nav('be','🇧🇪 Belgium')">Country Overview</a>
+    <a class="nav-item sub" data-page="be" data-anchor="h-be-invoice-types" onclick="nav('be','🇧🇪 Belgium','h-be-invoice-types')">Invoice Types</a>
+    <a class="nav-item sub" data-page="be" data-anchor="h-be-extensions" onclick="nav('be','🇧🇪 Belgium','h-be-extensions')">Extensions</a>
+    <a class="nav-item sub" data-page="be-map" onclick="nav('be-map','🇧🇪 Belgium — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" data-page="be" data-anchor="h-be-sample" onclick="nav('be','🇧🇪 Belgium','h-be-sample')">Sample Payload</a>
+    <a class="nav-item" data-page="my" onclick="nav('my','🇲🇾 Malaysia')">🇲🇾 Malaysia <span class="ctag ctag-my">MY</span></a>
+    <a class="nav-item sub" data-page="my" onclick="nav('my','🇲🇾 Malaysia')">Country Overview</a>
+    <a class="nav-item sub" data-page="my" data-anchor="h-my-invoice-types" onclick="nav('my','🇲🇾 Malaysia','h-my-invoice-types')">Invoice Types</a>
+    <a class="nav-item sub" data-page="my" data-anchor="h-my-extensions" onclick="nav('my','🇲🇾 Malaysia','h-my-extensions')">Extensions</a>
+    <a class="nav-item sub" data-page="my-map" onclick="nav('my-map','🇲🇾 Malaysia — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" data-page="my" data-anchor="h-my-sample" onclick="nav('my','🇲🇾 Malaysia','h-my-sample')">Sample Payload</a>
+    <a class="nav-item" data-page="ae" onclick="nav('ae','🇦🇪 UAE')">🇦🇪 UAE <span class="ctag ctag-ae">AE</span></a>
+    <a class="nav-item sub" data-page="ae" onclick="nav('ae','🇦🇪 UAE')">Country Overview</a>
+    <a class="nav-item sub" data-page="ae" onclick="nav('ae','🇦🇪 UAE')">Invoice Types</a>
+    <a class="nav-item sub" data-page="ae" data-anchor="h-ae-extensions" onclick="nav('ae','🇦🇪 UAE','h-ae-extensions')">PINT AE Extensions</a>
+    <a class="nav-item sub" data-page="ae-map" onclick="nav('ae-map','🇦🇪 UAE — Field Mapping')">Field Mapping</a>
+    <a class="nav-item sub" data-page="ae" data-anchor="h-ae-sample" onclick="nav('ae','🇦🇪 UAE','h-ae-sample')">Sample Payload</a>
   </div>
 
   <div class="sidebar-section">
@@ -206,14 +208,10 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 </nav>
 
 <div id="main">
-  <div class="preview-banner">Documentation Preview — Unified e-Invoicing API (Belgium · Malaysia · UAE)</div>
+  <div class="preview-banner">Documentation Preview — Unified e-Invoicing API (🇧🇪 Belgium · 🇲🇾 Malaysia · 🇦🇪 UAE)</div>
   <div class="top-bar">
     <div class="breadcrumb">Unified e-Invoicing API &nbsp;/&nbsp; <span id="bc">Introduction</span></div>
     <div class="top-right">
-      <div class="env-tabs">
-        <div class="env-tab active">Sandbox</div>
-        <div class="env-tab">Production</div>
-      </div>
       <span class="ver-badge">v1.0</span>
     </div>
   </div>
@@ -227,37 +225,62 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <p class="page-intro">A single API integration to generate, validate, and submit compliant e-invoices across multiple countries. ClearTax validates your payload and routes it to the appropriate government platform or Peppol network based on the country specified in the request header.</p>
       <div class="callout callout-info"><strong>One schema, multiple countries.</strong> The Unified API uses a single JSON payload structure inspired by UBL and PINT. Country-specific fields are added via an <code>extensions</code> object, keeping your core integration unchanged as you expand to new markets.</div>
 
-      <h2 class="no-border" style="margin-top:28px">Supported Countries</h2>
+      <h2 id="h-how-to-use" class="no-border" style="margin-top:28px">How to Use the API</h2>
+      <div class="steps">
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Onboard on ClearTax</strong> — Create a workspace on the demo environment for testing and a production workspace for live invoices.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Add countries</strong> — Enable the countries you operate in from your workspace settings.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Configure business entities</strong> — Add entity identifiers (VAT / TIN / TRN) and branches under Business Settings.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Generate an API client and Auth Token</strong> — Each workspace has its own auth token. 🇧🇪 Belgium, 🇲🇾 Malaysia, and 🇦🇪 UAE require separate tokens.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Build your payload</strong> — Start with common fields, then add country-specific extensions for your target country.</div></div>
+        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Send and track</strong> — Submit via the Send API, track processing via Status Check, and optionally trigger PDF generation or buyer email.</div></div>
+      </div>
+
+      <h2 id="h-live-countries">Live Countries</h2>
       <div class="country-grid">
-        <div class="country-card" onclick="nav('be','Belgium')">
-          <span class="cc-label ctag-be">BE</span>
-          <div class="cc-name">Belgium</div>
+        <div class="country-card" onclick="nav('be','🇧🇪 Belgium')">
+          <span class="cc-label ctag-be">🇧🇪 BE</span>
+          <div class="cc-name">🇧🇪 Belgium</div>
           <div class="cc-system">Peppol network via PINT EU / PINT BE. VAT-based entity identification.</div>
           <div class="cc-link">View Belgium guide &rarr;</div>
         </div>
-        <div class="country-card" onclick="nav('my','Malaysia')">
-          <span class="cc-label ctag-my">MY</span>
-          <div class="cc-name">Malaysia</div>
+        <div class="country-card" onclick="nav('my','🇲🇾 Malaysia')">
+          <span class="cc-label ctag-my">🇲🇾 MY</span>
+          <div class="cc-name">🇲🇾 Malaysia</div>
           <div class="cc-system">MyInvois platform (LHDN). TIN-based identification. 14 document types supported.</div>
           <div class="cc-link">View Malaysia guide &rarr;</div>
         </div>
-        <div class="country-card" onclick="nav('ae','UAE')">
-          <span class="cc-label ctag-ae">AE</span>
-          <div class="cc-name">UAE</div>
+        <div class="country-card" onclick="nav('ae','🇦🇪 UAE')">
+          <span class="cc-label ctag-ae">🇦🇪 AE</span>
+          <div class="cc-name">🇦🇪 UAE</div>
           <div class="cc-system">Peppol network via PINT AE. TRN-based identification. AED reporting required.</div>
           <div class="cc-link">View UAE guide &rarr;</div>
         </div>
       </div>
 
-      <h2 id="h-how-to-use">How to Use the API</h2>
-      <div class="steps">
-        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Onboard on ClearTax</strong> — Create a workspace on the demo environment for testing and a production workspace for live invoices.</div></div>
-        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Add countries</strong> — Enable the countries you operate in from your workspace settings.</div></div>
-        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Configure business entities</strong> — Add entity identifiers (VAT / TIN / TRN) and branches under Business Settings.</div></div>
-        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Generate an API client and Auth Token</strong> — Each workspace has its own auth token. Belgium, Malaysia, and UAE require separate tokens.</div></div>
-        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Build your payload</strong> — Start with common fields, then add country-specific extensions for your target country.</div></div>
-        <div class="step"><div class="step-num"></div><div class="step-body"><strong>Send and track</strong> — Submit via the Send API, track processing via Status Check, and optionally trigger PDF generation or buyer email.</div></div>
-      </div>
+      <h2 id="h-apis-structure">APIs and Structure</h2>
+      <p>The Unified e-Invoicing API exposes two HTTP methods. Every request follows a consistent structure across all countries.</p>
+      <h3>Supported Methods</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Method</th><th>Used For</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method m-post">POST</span></td><td>Send e-Invoice</td><td>Submit one or more invoice documents for validation and routing to the government platform or Peppol network.</td></tr>
+          <tr><td><span class="method m-get">GET</span></td><td>Status Check</td><td>Retrieve the current processing status of a previously submitted document using its <code>DocumentId</code>.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Request / Response Structure</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Component</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Request Method</strong></td><td>The HTTP verb (<code>POST</code> or <code>GET</code>) that defines the type of operation being performed.</td></tr>
+          <tr><td><strong>Request URL</strong></td><td>The full endpoint path, composed of the environment base URL plus the route and any embedded path parameters.</td></tr>
+          <tr><td><strong>Request Headers</strong></td><td>HTTP headers carrying the auth token, country code (<code>x-clear-country-code</code>), and the entity identifier (VAT / TIN / TRN) required per country.</td></tr>
+          <tr><td><strong>Request Path Params</strong></td><td>Variables embedded within the URL path that identify a specific resource — e.g. <code>{document_id}</code> in the Status Check endpoint.</td></tr>
+          <tr><td><strong>Request Query Params</strong></td><td>Optional key-value pairs appended to the URL after <code>?</code> — e.g. <code>einvoice-type=SALES</code> on the Send endpoint.</td></tr>
+          <tr><td><strong>Request Body</strong></td><td>JSON payload containing the invoice data. Required for <code>POST</code> endpoints; not applicable for <code>GET</code> requests.</td></tr>
+          <tr><td><strong>Response Schema</strong></td><td>The structure of the JSON object returned by the API on success or error, including field names, types, and nesting.</td></tr>
+          <tr><td><strong>Response Status Codes</strong></td><td>Standard HTTP codes indicating the outcome: <code>2xx</code> success, <code>4xx</code> client errors (auth, validation, conflict), <code>5xx</code> server errors.</td></tr>
+        </tbody>
+      </table></div>
 
       <h2 id="h-authentication">Authentication</h2>
       <p>All requests must include a valid auth token. The business identifier header is conditional on the country.</p>
@@ -265,8 +288,8 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         <thead><tr><th>Header</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td><code>x-cleartax-auth-token</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>User auth token. Unique per workspace.</td></tr>
-          <tr><td><code>x-clear-country-code</code></td><td><span class="badge b-enum">Enum</span></td><td><span class="badge b-req">Mandatory</span></td><td>Country for the invoice: <code>BE</code>, <code>MY</code>, <code>AE</code>, <code>DE</code></td></tr>
-          <tr><td><code>x-clear-vat</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>VAT of the entity. Required when country code is <code>BE</code> or <code>DE</code>.</td></tr>
+          <tr><td><code>x-clear-country-code</code></td><td><span class="badge b-enum">Enum</span></td><td><span class="badge b-req">Mandatory</span></td><td>Country for the invoice: <code>BE</code>, <code>MY</code>, <code>AE</code>, <code>SA</code></td></tr>
+          <tr><td><code>x-clear-vat</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>VAT of the entity. Required when country code is <code>BE</code>.</td></tr>
           <tr><td><code>x-clear-tin</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>TIN of the entity. Required when country code is <code>MY</code>.</td></tr>
           <tr><td><code>x-clear-trn</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-cond">Conditional</span></td><td>TRN of the entity. Required when country code is <code>AE</code>.</td></tr>
           <tr><td><code>x-clear-branch</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-opt">Optional</span></td><td>Branch or store name from the account.</td></tr>
@@ -275,21 +298,21 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
         </tbody>
       </table></div>
 
-      <h2 id="h-base-urls">Base URLs</h2>
-      <div class="url-grid">
-        <div class="url-card">
-          <div class="url-card-label">Sandbox (Demo / Testing)</div>
-          <div class="url-row"><span class="url-country">Belgium</span><span class="url-val">https://api-sandbox.eu.cleartax.com</span></div>
-          <div class="url-row"><span class="url-country">Malaysia</span><span class="url-val">https://api-sandbox.my.cleartax.com</span></div>
-          <div class="url-row"><span class="url-country">UAE</span><span class="url-val">https://api-sandbox.mea.cleartax.com</span></div>
-        </div>
-        <div class="url-card">
-          <div class="url-card-label">Production</div>
-          <div class="url-row"><span class="url-country">Belgium</span><span class="url-val">https://api.eu.cleartax.com</span></div>
-          <div class="url-row"><span class="url-country">Malaysia</span><span class="url-val">https://api.my.cleartax.com</span></div>
-          <div class="url-row"><span class="url-country">UAE</span><span class="url-val">https://api.mea.cleartax.com</span></div>
-        </div>
-      </div>
+      <h2 id="h-environments">Environments</h2>
+      <p>All environments use HTTPS on port 443 with TLS 1.2. Whitelist the IP addresses below if your network uses allowlisting.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Country</th><th>Environment</th><th>Base URL</th><th>IP Address(es)</th><th>Port</th><th>TLS</th></tr></thead>
+        <tbody>
+          <tr><td>🇸🇦 KSA</td><td><span class="badge b-cond">Sandbox</span></td><td><code>https://api-sandbox.cleartax.com</code></td><td><code>193.122.66.8</code>, <code>84.8.110.211</code></td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇸🇦 KSA</td><td><span class="badge b-req">Production</span></td><td><code>https://api.cleartax.com</code></td><td><code>150.230.55.2</code></td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇲🇾 Malaysia</td><td><span class="badge b-cond">Sandbox</span></td><td><code>https://api-sandbox.my.cleartax.com</code></td><td><code>15.197.160.58</code>, <code>99.83.191.173</code></td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇲🇾 Malaysia</td><td><span class="badge b-req">Production</span></td><td><code>https://api.my.cleartax.com</code></td><td><code>15.197.186.217</code>, <code>99.83.165.145</code></td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇧🇪 Belgium</td><td><span class="badge b-cond">Sandbox</span></td><td><code>https://api-sandbox.eu.cleartax.com</code></td><td><code>166.117.67.50</code>, <code>166.117.217.112</code></td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇧🇪 Belgium</td><td><span class="badge b-req">Production</span></td><td><code>https://api.eu.cleartax.com</code></td><td><code>166.117.67.50</code>, <code>166.117.217.112</code></td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇦🇪 UAE</td><td><span class="badge b-cond">Sandbox</span></td><td><code>https://api-sandbox.mea.cleartax.com</code></td><td>Contact support</td><td>443</td><td>1.2</td></tr>
+          <tr><td>🇦🇪 UAE</td><td><span class="badge b-req">Production</span></td><td><code>https://api.mea.cleartax.com</code></td><td>Contact support</td><td>443</td><td>1.2</td></tr>
+        </tbody>
+      </table></div>
     </div>
 
     <!-- SEND E-INVOICE -->
@@ -462,15 +485,15 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <div class="tbl-wrap"><table>
         <thead><tr><th>Code</th><th>Country</th><th>Region</th></tr></thead>
         <tbody>
-          <tr><td><code>BE</code></td><td>Belgium</td><td>EU</td></tr>
-          <tr><td><code>DE</code></td><td>Germany</td><td>EU</td></tr>
-          <tr><td><code>MY</code></td><td>Malaysia</td><td>SEA</td></tr>
-          <tr><td><code>AE</code></td><td>United Arab Emirates</td><td>MEA</td></tr>
+          <tr><td><code>BE</code></td><td>🇧🇪 Belgium</td><td>EU</td></tr>
+          <tr><td><code>DE</code></td><td>🇩🇪 Germany</td><td>EU</td></tr>
+          <tr><td><code>MY</code></td><td>🇲🇾 Malaysia</td><td>SEA</td></tr>
+          <tr><td><code>AE</code></td><td>🇦🇪 United Arab Emirates</td><td>MEA</td></tr>
         </tbody>
       </table></div>
 
       <h2>Invoice Type Codes</h2>
-      <h3>Belgium and Germany (EN 16931 / PINT EU)</h3>
+      <h3>🇧🇪 Belgium and 🇩🇪 Germany (EN 16931 / PINT EU)</h3>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Code</th><th>Document Type</th></tr></thead>
         <tbody>
@@ -482,7 +505,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>389</code></td><td>Self-Billed Invoice</td></tr>
         </tbody>
       </table></div>
-      <h3>Malaysia (LHDN MyInvois)</h3>
+      <h3>🇲🇾 Malaysia (LHDN MyInvois)</h3>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Code</th><th>Document Type</th><th>Self-Billed</th></tr></thead>
         <tbody>
@@ -496,7 +519,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
           <tr><td><code>14</code></td><td>Self-Billed Refund Note</td><td>Yes</td></tr>
         </tbody>
       </table></div>
-      <h3>UAE (PINT AE)</h3>
+      <h3>🇦🇪 UAE (PINT AE)</h3>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Code</th><th>Document Type</th></tr></thead>
         <tbody>
@@ -509,7 +532,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <h2>Tax Category Codes</h2>
       <p>Used in <code>taxTotal[].taxSubtotal[].taxCategory.id</code> and <code>invoiceLine[].item.classifiedTaxCategory[].id</code>.</p>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>Code</th><th>Description</th><th>BE</th><th>MY</th><th>AE</th></tr></thead>
+        <thead><tr><th>Code</th><th>Description</th><th>🇧🇪 BE</th><th>🇲🇾 MY</th><th>🇦🇪 AE</th></tr></thead>
         <tbody>
           <tr><td><code>S</code></td><td>Standard rate</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
           <tr><td><code>Z</code></td><td>Zero-rated (0%)</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
@@ -563,16 +586,16 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
       <div class="tbl-wrap"><table>
         <thead><tr><th>Scheme ID</th><th>Description</th><th>Country</th></tr></thead>
         <tbody>
-          <tr><td><code>9925</code></td><td>Belgian VAT number</td><td>BE</td></tr>
-          <tr><td><code>0208</code></td><td>Belgian enterprise number (KBO/CBE)</td><td>BE</td></tr>
-          <tr><td><code>0193</code></td><td>Belgian company number</td><td>BE</td></tr>
-          <tr><td><code>0088</code></td><td>EAN Location Code (GLN)</td><td>BE, DE</td></tr>
-          <tr><td><code>TIN</code></td><td>Tax Identification Number</td><td>MY</td></tr>
-          <tr><td><code>BRN</code></td><td>Business Registration Number</td><td>MY</td></tr>
-          <tr><td><code>SST</code></td><td>Sales and Service Tax number</td><td>MY</td></tr>
-          <tr><td><code>NRIC</code></td><td>National Registration Identity Card</td><td>MY</td></tr>
-          <tr><td><code>PASSPORT</code></td><td>Passport number</td><td>MY, AE</td></tr>
-          <tr><td><code>ARMY</code></td><td>Military identification</td><td>MY</td></tr>
+          <tr><td><code>9925</code></td><td>Belgian VAT number</td><td>🇧🇪 BE</td></tr>
+          <tr><td><code>0208</code></td><td>Belgian enterprise number (KBO/CBE)</td><td>🇧🇪 BE</td></tr>
+          <tr><td><code>0193</code></td><td>Belgian company number</td><td>🇧🇪 BE</td></tr>
+          <tr><td><code>0088</code></td><td>EAN Location Code (GLN)</td><td>🇧🇪 BE, 🇩🇪 DE</td></tr>
+          <tr><td><code>TIN</code></td><td>Tax Identification Number</td><td>🇲🇾 MY</td></tr>
+          <tr><td><code>BRN</code></td><td>Business Registration Number</td><td>🇲🇾 MY</td></tr>
+          <tr><td><code>SST</code></td><td>Sales and Service Tax number</td><td>🇲🇾 MY</td></tr>
+          <tr><td><code>NRIC</code></td><td>National Registration Identity Card</td><td>🇲🇾 MY</td></tr>
+          <tr><td><code>PASSPORT</code></td><td>Passport number</td><td>🇲🇾 MY, 🇦🇪 AE</td></tr>
+          <tr><td><code>ARMY</code></td><td>Military identification</td><td>🇲🇾 MY</td></tr>
         </tbody>
       </table></div>
 
@@ -591,7 +614,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <!-- BELGIUM -->
     <div id="page-be" class="page">
       <div class="section-tag">Country Guide</div>
-      <h1>Belgium <span class="ctag ctag-be" style="font-size:14px;padding:3px 10px;vertical-align:middle">BE</span></h1>
+      <h1>🇧🇪 Belgium <span class="ctag ctag-be" style="font-size:14px;padding:3px 10px;vertical-align:middle">BE</span></h1>
       <p class="page-intro">Belgium mandates e-invoicing via the Peppol network using the PINT EU specification, extended by the PINT BE Belgian localisation. Invoices are delivered to the buyer's Peppol endpoint through ClearTax's EU regional infrastructure.</p>
       <h2 class="no-border" style="margin-top:20px">Submission Flow</h2>
       <div class="flow">
@@ -679,7 +702,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <!-- BELGIUM FIELD MAPPING -->
     <div id="page-be-map" class="page">
       <div class="section-tag">Country Guide — Belgium</div>
-      <h1>Belgium — Field Mapping</h1>
+      <h1>🇧🇪 Belgium — Field Mapping</h1>
       <p class="page-intro">Maps ClearTax Unified API JSON field paths to their corresponding UBL 2.1 element names and PINT EU business terms. Use this to cross-reference against the official specification.</p>
       <h2 class="no-border" style="margin-top:20px">Document Header</h2>
       <div class="tbl-wrap"><table>
@@ -741,7 +764,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <!-- MALAYSIA -->
     <div id="page-my" class="page">
       <div class="section-tag">Country Guide</div>
-      <h1>Malaysia <span class="ctag ctag-my" style="font-size:14px;padding:3px 10px;vertical-align:middle">MY</span></h1>
+      <h1>🇲🇾 Malaysia <span class="ctag ctag-my" style="font-size:14px;padding:3px 10px;vertical-align:middle">MY</span></h1>
       <p class="page-intro">Malaysia's e-invoicing mandate is administered by LHDN (Inland Revenue Board) through the MyInvois platform. Invoices must be validated and stamped by MyInvois before they are legally valid. ClearTax handles submission and returns the stamped response.</p>
       <h2 class="no-border" style="margin-top:20px">Submission Flow</h2>
       <div class="flow">
@@ -815,7 +838,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <!-- MALAYSIA FIELD MAPPING -->
     <div id="page-my-map" class="page">
       <div class="section-tag">Country Guide — Malaysia</div>
-      <h1>Malaysia — Field Mapping</h1>
+      <h1>🇲🇾 Malaysia — Field Mapping</h1>
       <p class="page-intro">Maps ClearTax Unified API JSON field paths to LHDN MyInvois field names as defined in the MyInvois Data Dictionary.</p>
       <h2 class="no-border" style="margin-top:20px">Document Header</h2>
       <div class="tbl-wrap"><table>
@@ -880,7 +903,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <!-- UAE -->
     <div id="page-ae" class="page">
       <div class="section-tag">Country Guide</div>
-      <h1>UAE <span class="ctag ctag-ae" style="font-size:14px;padding:3px 10px;vertical-align:middle">AE</span></h1>
+      <h1>🇦🇪 UAE <span class="ctag ctag-ae" style="font-size:14px;padding:3px 10px;vertical-align:middle">AE</span></h1>
       <p class="page-intro">The UAE adopts e-invoicing through the Peppol network using the PINT AE specification. VAT is governed by the Federal Tax Authority (FTA). ClearTax routes UAE invoices through the MEA (Middle East and Africa) regional infrastructure.</p>
       <div class="callout callout-warn"><strong>AED reporting required.</strong> UAE invoices must include total and line-level amounts in AED in the PINT AE extension fields, even when the invoice is denominated in a foreign currency.</div>
       <h2>Submission Flow</h2>
@@ -958,7 +981,7 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
     <!-- UAE FIELD MAPPING -->
     <div id="page-ae-map" class="page">
       <div class="section-tag">Country Guide — UAE</div>
-      <h1>UAE — Field Mapping</h1>
+      <h1>🇦🇪 UAE — Field Mapping</h1>
       <p class="page-intro">Maps ClearTax Unified API JSON field paths to PINT AE business terms as defined in the Peppol PINT AE specification.</p>
       <h2 class="no-border" style="margin-top:20px">Document Header</h2>
       <div class="tbl-wrap"><table>
