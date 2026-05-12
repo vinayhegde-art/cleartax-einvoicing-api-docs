@@ -142,14 +142,14 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 .nav-item.sub2 { padding-left: 40px; font-size: 11.5px; color: #64748b; }
 .nav-item.sub2:hover { color: #cbd5e1; }
 .nav-item.sub2.active { color: #7dd3fc; border-left-color: #7dd3fc; background: rgba(56,189,248,0.06); }
-td.path { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11px; color: #0f766e; background: #f0fdfa; font-weight: 500; white-space: normal; word-break: break-all; text-align: center; max-width: 220px; }
+td.path { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11px; color: #0f766e; background: #f0fdfa; font-weight: 500; white-space: normal; word-break: break-word; overflow-wrap: break-word; text-align: left; min-width: 280px; width: 22%; }
 td.desc { color: #475569; font-size: 12.5px; line-height: 1.55; min-width: 300px; }
-td.example { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11.5px; color: #6d28d9; background: #faf5ff; white-space: nowrap; min-width: 120px; }
+td.example { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11.5px; color: #6d28d9; background: #faf5ff; white-space: nowrap; width: 1%; }
 /* Cardinality column: fit content only */
 table:has(td.path) th:nth-child(6),
 table:has(td.path) td:nth-child(6) { width: 1%; white-space: nowrap; text-align: center; }
 /* Ensure Example Value header is never clipped */
-table:has(td.path) th:nth-child(7) { min-width: 115px; }
+table:has(td.path) th:nth-child(7) { white-space: nowrap; width: 1%; }
 /* BT Reference column: compact */
 table:has(td.path) th:nth-child(3),
 table:has(td.path) td:nth-child(3) { white-space: nowrap; width: 1%; text-align: center; }
@@ -184,16 +184,15 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
     <a class="nav-item sub" data-page="overview" data-anchor="h-environments" onclick="nav('overview','Introduction','h-environments')">Endpoints</a>
     <a class="nav-item sub" data-page="overview" data-anchor="h-authentication" onclick="nav('overview','Introduction','h-authentication')">Headers</a>
     <a class="nav-item sub" data-page="overview" data-anchor="h-send-body" onclick="nav('overview','Introduction','h-send-body')">Request Body</a>
+    <a class="nav-item sub" data-page="overview" data-anchor="h-send-status-codes" onclick="nav('overview','Introduction','h-send-status-codes')">Response Status Codes</a>
     <a class="nav-item sub" data-page="overview" data-anchor="h-send-response" onclick="nav('overview','Introduction','h-send-response')">Response Schema</a>
-    <a class="nav-item sub" data-page="overview" data-anchor="h-send-codelists" onclick="nav('overview','Introduction','h-send-codelists')">Code Lists</a>
-    <a class="nav-item sub" data-page="overview" data-anchor="h-send-errors" onclick="nav('overview','Introduction','h-send-errors')">Error Codes</a>
     <a class="nav-item sub" data-page="overview" data-anchor="h-send-constraints" onclick="nav('overview','Introduction','h-send-constraints')">API Constraints</a>
   </div>
 
   <div class="sidebar-section">
     <div class="sidebar-section-label">API Reference</div>
     <a class="nav-item" data-page="send" onclick="nav('send','Schema of e-Invoice object')">Schema of e-Invoice object</a>
-    <a class="nav-item sub" data-page="send" data-anchor="h-send-schema" onclick="nav('send','Schema of e-Invoice object','h-send-schema')">Request Schema</a>
+    <a class="nav-item sub" data-page="send" data-anchor="h-send-schema" onclick="nav('send','Schema of e-Invoice object','h-send-schema')">Base Schema</a>
     <a class="nav-item sub2" data-page="send" data-anchor="h-schema-header" onclick="nav('send','Schema of e-Invoice object','h-schema-header')">Invoice Header Fields</a>
     <a class="nav-item sub2" data-page="send" data-anchor="h-schema-period" onclick="nav('send','Schema of e-Invoice object','h-schema-period')">Invoice Period</a>
     <a class="nav-item sub2" data-page="send" data-anchor="h-schema-billing" onclick="nav('send','Schema of e-Invoice object','h-schema-billing')">Billing Reference</a>
@@ -248,7 +247,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
   <div class="sidebar-section">
     <div class="sidebar-section-label">Resources</div>
     <a class="nav-item" data-page="codelists" onclick="nav('codelists','Code Lists')">Code Lists</a>
-    <a class="nav-item">Validations and Errors</a>
+    <a class="nav-item" data-page="validations" onclick="nav('validations','Validations and Errors')">Validations and Errors</a>
     <a class="nav-item">Changelog</a>
   </div>
 </nav>
@@ -365,7 +364,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
         <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
         <tbody>
           <tr><td><code>Documents</code></td><td><span class="badge b-arr">Array</span></td><td><span class="badge b-req">Mandatory</span></td><td>List of invoice documents. Min: 1, Max: 10.</td></tr>
-          <tr><td><code>Documents[].DocumentData</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Base64-encoded JSON of the eInvoice object.</td></tr>
+          <tr><td><code>Documents[].DocumentData</code></td><td><span class="badge b-str">String</span></td><td><span class="badge b-req">Mandatory</span></td><td>Base64-encoded JSON of the <a onclick="nav('send','Schema of e-Invoice object')" style="cursor:pointer;color:#2563eb;">e-Invoice object</a>.</td></tr>
           <tr><td><code>Documents[].DocumentFormat</code></td><td><span class="badge b-enum">Enum</span></td><td><span class="badge b-req">Mandatory</span></td><td>Format of the document data. Only <code>JSON</code> is supported.</td></tr>
           <tr><td><code>Documents[].CustomFields</code></td><td><span class="badge b-obj">Object</span></td><td><span class="badge b-opt">Optional</span></td><td>Key-value pairs for custom fields in PDF templates or reports.</td></tr>
         </tbody>
@@ -408,11 +407,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
         </tbody>
       </table></div>
 
-      <h2 id="h-send-codelists">Code Lists</h2>
-      <p>See the <a onclick="nav('codelists','Code Lists')">Code Lists</a> page for all enumerated values including invoice type codes, tax category codes, payment means codes, and unit of measure codes.</p>
 
-      <h2 id="h-send-errors">Error Codes</h2>
-      <div class="callout callout-note">The complete list of error codes, messages, applicable countries, causes, and resolutions will be published in the <strong>Validations and Errors</strong> reference.</div>
 
       <h2 id="h-send-constraints">API Constraints</h2>
       <div class="tbl-wrap"><table>
@@ -438,17 +433,8 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
         <div class="endpoint-body">Supports up to <strong>10 documents per request</strong>. <code>DocumentData</code> must be a Base64-encoded JSON string of the eInvoice object.</div>
       </div>
 
-      <h2 id="h-send-headers">Request Headers</h2>
-      <p>See the <a onclick="nav('overview','Introduction','h-authentication')">Headers</a> section for the full header reference.</p>
-      <div class="tbl-wrap"><table>
-        <thead><tr><th>Query Parameter</th><th>Type</th><th>Description</th></tr></thead>
-        <tbody>
-          <tr><td><code>einvoice-type</code></td><td><span class="badge b-enum">Enum</span></td><td>Default: <code>SALES</code>. Currently only <code>SALES</code> is supported.</td></tr>
-        </tbody>
-      </table></div>
-
-
-      <h2 id="h-send-schema">Request Schema</h2>
+      <h2 id="h-send-schema">Base Schema</h2>
+      <p style="color:#475569;font-size:14px;line-height:1.7;margin-bottom:16px;">Below is the base schema of the e-Invoice object that is common and applicable across all countries.</p>
       <p style="color:#475569;font-size:14px;line-height:1.7;margin-bottom:24px;">
         The ClearTax Unified API accepts a single JSON payload that covers all supported countries.
         The schema is organised into <strong>13 parent objects</strong>; each contains child fields documented below.
@@ -461,7 +447,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -578,7 +564,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -623,7 +609,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -668,7 +654,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -740,7 +726,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -875,7 +861,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -992,7 +978,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1091,7 +1077,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1163,7 +1149,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1190,7 +1176,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1271,7 +1257,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1352,7 +1338,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1451,7 +1437,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th>
+            <th>Json Path</th>
             <th>Business Term</th>
             <th>BT Reference</th>
             <th>Description</th>
@@ -1869,6 +1855,14 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       </table></div>
     </div>
 
+    <!-- VALIDATIONS AND ERRORS -->
+    <div id="page-validations" class="page">
+      <div class="section-tag">Resources</div>
+      <h1>Validations and Errors</h1>
+      <p class="page-intro">Reference documentation for all validation rules, error codes, and resolution guidance across the Unified e-Invoicing API.</p>
+      <div class="callout callout-note">The complete list of error codes, messages, applicable countries, possible causes, and resolutions will be published shortly.</div>
+    </div>
+
     <!-- BELGIUM -->
     <div id="page-be" class="page">
       <div class="section-tag">Country Guide</div>
@@ -1920,7 +1914,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -1958,7 +1952,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -2077,7 +2071,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -2196,7 +2190,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2243,7 +2237,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2281,7 +2275,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -2319,7 +2313,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2375,7 +2369,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2404,7 +2398,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2684,7 +2678,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2731,7 +2725,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2787,7 +2781,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2816,7 +2810,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -2908,7 +2902,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -2973,7 +2967,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3002,7 +2996,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3040,7 +3034,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -3344,7 +3338,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3400,7 +3394,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -3465,7 +3459,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3530,7 +3524,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3568,7 +3562,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3597,7 +3591,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr class="group-row">
@@ -3671,7 +3665,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3700,7 +3694,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
@@ -3729,7 +3723,7 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
       <div class="tbl-wrap">
         <table>
           <thead><tr>
-            <th>Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
+            <th>Json Path</th><th>Business Term</th><th>BT Reference</th><th>Description</th><th>Data Type</th><th>Cardinality</th><th>Example Value</th>
           </tr></thead>
           <tbody>
             <tr>
