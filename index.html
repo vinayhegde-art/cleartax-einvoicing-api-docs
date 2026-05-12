@@ -144,12 +144,12 @@ pre { background: #0f1117; padding: 16px; overflow-x: auto; margin: 0; font-fami
 .nav-item.sub2.active { color: #7dd3fc; border-left-color: #7dd3fc; background: rgba(56,189,248,0.06); }
 td.path { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11px; color: #0f766e; background: #f0fdfa; font-weight: 500; white-space: normal; word-break: break-word; overflow-wrap: break-word; text-align: left; min-width: 280px; width: 22%; }
 td.desc { color: #475569; font-size: 12.5px; line-height: 1.55; min-width: 300px; }
-td.example { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11.5px; color: #6d28d9; background: #faf5ff; white-space: nowrap; width: 1%; }
+td.example { font-family: 'SF Mono', 'Menlo', 'Consolas', monospace; font-size: 11.5px; color: #6d28d9; background: #faf5ff; white-space: normal; word-break: break-word; overflow-wrap: break-word; max-width: 150px; }
 /* Cardinality column: fit content only */
 table:has(td.path) th:nth-child(6),
 table:has(td.path) td:nth-child(6) { width: 1%; white-space: nowrap; text-align: center; }
-/* Ensure Example Value header is never clipped */
-table:has(td.path) th:nth-child(7) { white-space: nowrap; width: 1%; }
+/* Example Value header — constrain width to match cells */
+table:has(td.path) th:nth-child(7) { max-width: 150px; white-space: normal; word-break: break-word; }
 /* BT Reference column: compact */
 table:has(td.path) th:nth-child(3),
 table:has(td.path) td:nth-child(3) { white-space: nowrap; width: 1%; text-align: center; }
@@ -162,6 +162,51 @@ table:has(td.path) td:nth-child(5) { width: 1%; white-space: nowrap; text-align:
 .type-group { display: inline-block; padding: 1px 6px; border-radius: 3px; font-size: 11px; font-family: 'SF Mono', monospace; background: #dcfce7; color: #166534; }
 .group-row td { background: #fafaf9 !important; }
 .group-row td.path { background: #f0fdf4 !important; color: #16a34a; }
+
+/* ── Page-level prev / next navigation ─────────────────────── */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 48px 0 24px;
+  padding: 18px 20px;
+  border-top: 1px solid #e5e7eb;
+  gap: 12px;
+}
+.page-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  text-decoration: none;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+.page-nav a:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+  box-shadow: 0 2px 8px rgba(37,99,235,.10);
+}
+.page-nav a .pn-dir {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #9ca3af;
+  display: block;
+}
+.page-nav a:hover .pn-dir { color: #93c5fd; }
+.page-nav a .pn-label { display: block; }
+.page-nav .pn-prev { text-align: left; }
+.page-nav .pn-next { text-align: right; }
+.page-nav .pn-spacer { flex: 1; }
 </style>
 </head>
 <body>
@@ -3990,6 +4035,66 @@ function copyCode(btn) {
     setTimeout(() => btn.textContent = 'Copy', 1800);
   });
 }
+
+
+// ── Prev / Next page navigation ────────────────────────────────────────────
+(function buildPageNav() {
+  const SEQ = [
+    { page: 'overview',  label: 'Introduction' },
+    { page: 'send',      label: 'Schema of e-Invoice object' },
+    { page: 'status',    label: 'Status Check' },
+    { page: 'be',        label: '\u{1F1E7}\u{1F1EA} Belgium' },
+    { page: 'be-map',    label: '\u{1F1E7}\u{1F1EA} Belgium \u2014 Field Mapping' },
+    { page: 'my',        label: '\u{1F1F2}\u{1F1FE} Malaysia' },
+    { page: 'my-map',    label: '\u{1F1F2}\u{1F1FE} Malaysia \u2014 Field Mapping' },
+    { page: 'ae',        label: '\u{1F1E6}\u{1F1EA} UAE' },
+    { page: 'ae-map',    label: '\u{1F1E6}\u{1F1EA} UAE \u2014 Field Mapping' },
+    { page: 'codelists', label: 'Code Lists' },
+    { page: 'validations', label: 'Validations and Errors' },
+  ];
+
+  function inject() {
+    SEQ.forEach(function(item, idx) {
+      var pageEl = document.getElementById('page-' + item.page);
+      if (!pageEl) return;
+      if (pageEl.querySelector('.page-nav')) return;
+
+      var prev = idx > 0 ? SEQ[idx - 1] : null;
+      var next = idx < SEQ.length - 1 ? SEQ[idx + 1] : null;
+
+      var navDiv = document.createElement('div');
+      navDiv.className = 'page-nav';
+
+      if (prev) {
+        var prevA = document.createElement('a');
+        prevA.className = 'pn-prev';
+        prevA.setAttribute('onclick', "nav('" + prev.page + "','" + prev.label.replace(/'/g, "\\'") + "')");
+        prevA.innerHTML = '<span class="pn-dir">\u2190 Previous</span><span class="pn-label">' + prev.label + '</span>';
+        navDiv.appendChild(prevA);
+      } else {
+        var spacer = document.createElement('div');
+        spacer.className = 'pn-spacer';
+        navDiv.appendChild(spacer);
+      }
+
+      if (next) {
+        var nextA = document.createElement('a');
+        nextA.className = 'pn-next';
+        nextA.setAttribute('onclick', "nav('" + next.page + "','" + next.label.replace(/'/g, "\\'") + "')");
+        nextA.innerHTML = '<span class="pn-dir">Next \u2192</span><span class="pn-label">' + next.label + '</span>';
+        navDiv.appendChild(nextA);
+      }
+
+      pageEl.appendChild(navDiv);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', inject);
+  } else {
+    inject();
+  }
+})();
 
 // Initialise scroll tracking for the default page
 document.addEventListener('DOMContentLoaded', () => _setupScrollTracking('overview'));
